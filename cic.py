@@ -195,19 +195,6 @@ elif choice == 2:
                 min_block_host_vol_size =  (logging_pvsize * replica_log) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
-                cluster_storage = len(raw_devices) * raw_storage_size * len(app_hosts)
-                block_calc = registry_pvsize + block_host_size
-                totalcalc = block_calc
-                if totalcalc < cluster_storage :
-                        print "cluster_storage=%d" % cluster_storage
-                        print "totalstoragecalc=%d" % totalcalc 
-                        print "\033[91m Total Storage is Oversubscribed \033[0m"
-                        print "\033[91m Please provision the storage \033[0m" 
-                        print "Total storage calc = block_host_vol_size (if it exists) \n"
-                        print "+registry PV < sum of storage devices per node \033[0m"
-                        exit()
-
-
                 print "   " 
                 print "[OSEv3:children]"
                 print "glusterfs"

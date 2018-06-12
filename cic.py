@@ -75,8 +75,6 @@ def both_in_use():
             print "\033[91m %s \033[0m is not valid hostname" % hosts
             exit()
 
-
-
 print (60 * '-')
 print ("   CNS - Inventory File Creator")
 print (60 * '-')

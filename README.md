@@ -24,7 +24,7 @@ the larger openshift-ansible inventory file for your deployment.
 5. Storage for Applications Only
 ------------------------------------------------------------
 
-### Example
+## Example
 
 Enter your choice [1-5] : 4
 ------------------------------------------------------------
@@ -32,11 +32,17 @@ For this configuration 7 nodes are recommended
 With a minimum of 3 required 
 ------------------------------------------------------------
 How many nodes are available ?:  3
-What hosts will be used for application storage (IP/FQDN) ?: ip-172-16-30-124.us-west-2.compute.internal ip-172-16-34-239.us-west-2.compute.internal ip-172-16-59-115.us-west-2.compute.internal
-What are the raw storage devices for these hosts(/dev/<device>) ?: /dev/xvdf /dev/xvdg
-What is the size of each raw storage device (GB) ?: 100
-What is the size for the registry persistent volume (GB)?: 10
-How many replicas for logging ?: 3
-What is the size for each logging persistent volume (GB) ?: 25
-What is the size for each metrics persistent volume (GB) ?: 20
 
+What hosts will be used for application storage (IP/FQDN) ?: ip-172-16-30-124.us-west-2.compute.internal ip-172-16-34-239.us-west-2.compute.internal ip-172-16-59-115.us-west-2.compute.internal
+
+What are the raw storage devices for these hosts(/dev/<device>) ?: /dev/xvdf /dev/xvdg
+
+What is the size of each raw storage device (GB) ?: 100
+
+What is the size for the registry persistent volume (GB)?: 10
+
+How many replicas for logging ?: 3
+
+What is the size for each logging persistent volume (GB) ?: 25
+
+What is the size for each metrics persistent volume (GB) ?: 20

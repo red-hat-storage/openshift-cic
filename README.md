@@ -6,8 +6,6 @@ Script which the user runs and then answers a list of questions to create set of
 
 Embedded in the answers will be some calculations or ‘pre-flight checks’. An example is the minimum size for the block_host_vol_size (GB). The minimum size is equal to all of the blockvolume PVs added up for metrics, logging and registry + 30% overhead.
 
-## Getting Started
-
 $ ./cic.py 
 ------------------------------------------------------------
    CNS - Inventory File Creator

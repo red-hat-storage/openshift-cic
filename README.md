@@ -44,3 +44,47 @@ How many replicas for logging ?: 3
 What is the size for each logging persistent volume (GB) ?: 25
 
 What is the size for each metrics persistent volume (GB) ?: 20
+
+```
+OSEv3:children]
+glusterfs
+   
+# registry
+openshift_hosted_registry_storage_kind=glusterfs
+openshift_hosted_registry_storage_volume_size=10
+openshift_hosted_registry_selector={"region":"infra"}
+   
+# logging
+openshift_logging_install_logging=true
+openshift_logging_es_pvc_dynamic=true 
+openshift_logging_es_pvc_size= 25
+openshift_logging_es_cluster_size=3
+openshift_logging_es_pvc_storage_class_name='glusterfs-storage-block'
+openshift_logging_kibana_nodeselector={"region":"infra"}
+openshift_logging_curator_nodeselector={"region":"infra"}
+openshift_logging_es_nodeselector={"region":"infra"}
+  
+# metrics
+openshift_metrics_install_metrics=true 
+openshift_metrics_storage_kind=dynamic
+openshift_metrics_storage_volume_size=20
+openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-storage-block'
+openshift_metrics_hawkular_nodeselector:{"region":"infra"}
+openshift_metrics_cassandra_nodeselector:{"region":"infra"}
+openshift_metrics_heapster_nodeselector:{"region":"infra"}
+   
+# CNS storage cluster
+openshift_storage_glusterfs_namespace=app-storage
+openshift_storage_glusterfs_storageclass=true
+openshift_storage_glusterfs_storageclass_default=false
+openshift_storage_glusterfs_block_deploy=true
+openshift_storage_glusterfs_block_host_vol_create=true
+openshift_storage_glusterfs_block_host_vol_size=123
+openshift_storage_glusterfs_block_storageclass=true
+openshift_storage_glusterfs_block_storageclass_default=false
+   
+[glusterfs]
+ip-172-16-30-124.us-west-2.compute.internal glusterfs_devices='["/dev/xvdf", "/dev/xvdg"]'
+ip-172-16-34-239.us-west-2.compute.internal glusterfs_devices='["/dev/xvdf", "/dev/xvdg"]'
+ip-172-16-59-115.us-west-2.compute.internal glusterfs_devices='["/dev/xvdf", "/dev/xvdg"]'
+```

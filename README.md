@@ -24,8 +24,6 @@ the larger openshift-ansible inventory file for your deployment.
 5. Storage for Applications Only
 ------------------------------------------------------------
 
-## Example
-
 Enter your choice [1-5] : 4
 ------------------------------------------------------------
 For this configuration 7 nodes are recommended

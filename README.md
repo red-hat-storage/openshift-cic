@@ -4,7 +4,7 @@
 
 Script which the user runs and then answers a list of questions to create set of inventory_file options to be incorporated into their larger inventory_file for running openshift-ansible playbooks. The goal is to reduce the complexity and error prone nature of needing to know the correct CNS/CRS inventory_file options for a particular OCP/CNS version. The first prototype will be created for OCP 3.9 with the goal of using with OCP 3.7 as well. 
 
-Embedded in the answers will be some calculations or ‘pre-flight checks’. An example is the minimum size for the block_host_vol_size (GB). The minimum size is equal to all of the blockvolume PVs added up for metrics, logging and registry + 30% overhead.
+Embedded in the answers will be some calculations or ‘pre-flight checks’. An example is the minimum size for the block_host_vol_size (GB). The minimum size is equal to all of the blockvolume PVs added up for metrics and logging + 30% overhead.
 
 $ ./cic.py 
 ------------------------------------------------------------

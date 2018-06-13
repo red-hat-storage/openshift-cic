@@ -414,9 +414,9 @@ elif choice == 2:
 
                           
                 print "[glusterfs]"
-                print  app_hosts[0] + + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] +  " glusterfs_devices=" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] +  " glusterfs_devices=" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] +  " glusterfs_devices=" + json.dumps(raw_devices) + "'"
                
 
                                 

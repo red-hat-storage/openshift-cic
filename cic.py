@@ -233,7 +233,7 @@ elif choice == 2:
                 print "   "
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1"+ " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
@@ -359,10 +359,10 @@ elif choice == 2:
 
                           
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 
                         
 
@@ -414,9 +414,9 @@ elif choice == 2:
 
                           
                 print "[glusterfs]"
-                print  app_hosts[0] +  " glusterfs_zone=1" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] +  " glusterfs_zone=2" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] +  " glusterfs_zone=3" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                
 
 elif choice == 3:

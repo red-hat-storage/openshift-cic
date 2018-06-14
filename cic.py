@@ -134,10 +134,10 @@ if choice == 1:
                 print "   "
 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
 
         else :
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").split(" ")
@@ -164,9 +164,9 @@ if choice == 1:
                 print "openshift_storage_glusterfs_block_deploy=false"
                 print "   "
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"       
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"       
         
                 
 elif choice == 2:
@@ -233,16 +233,16 @@ elif choice == 2:
                 print "   "
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1"+ " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print " "
 
                 print "[glusterfs_registry]"
-                print  log_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
-                print  log_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
-                print  log_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
+                print  log_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
+                print  log_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
+                print  log_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
         
         elif avail_hosts == 6:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
@@ -301,15 +301,15 @@ elif choice == 2:
                 print "   "
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print "  "
 
                 print "[glusterfs_registry]"
-                print  log_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
-                print  log_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
-                print  log_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
+                print  log_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
+                print  log_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
+                print  log_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
 
         elif avail_hosts == 4:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
@@ -359,10 +359,10 @@ elif choice == 2:
 
                           
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
+                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
                 
                         
 
@@ -414,12 +414,10 @@ elif choice == 2:
 
                           
                 print "[glusterfs]"
-                print  app_hosts[0] +  " glusterfs_devices=" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] +  " glusterfs_devices=" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] +  " glusterfs_devices=" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] +  " glusterfs_zone=1" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] +  " glusterfs_zone=2" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] +  " glusterfs_zone=3" + " glusterfs_devices=" + json.dumps(raw_devices) + "'"
                
-
-                                
 
 elif choice == 3:
         print (60 * '-')
@@ -484,16 +482,16 @@ elif choice == 3:
                 print "   "
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print "  "
 
                 print "[glusterfs_registry]"
-                print  met_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
-                print  met_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
-                print  met_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
+                print  met_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
+                print  met_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
+                print  met_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
                 print " "
 
         elif avail_hosts == 6:
@@ -551,15 +549,15 @@ elif choice == 3:
                 print "   "
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print " "
 
                 print "[glusterfs_registry]"
-                print  met_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
-                print  met_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
-                print  met_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
+                print  met_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
+                print  met_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
+                print  met_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
                 print " "
 
         elif avail_hosts == 4:
@@ -605,10 +603,10 @@ elif choice == 3:
                           
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print " "
 
 
@@ -660,9 +658,9 @@ elif choice == 3:
                           
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print " "
                                        
          
@@ -743,16 +741,16 @@ elif choice == 4:
                 print "   "
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print "  "
 
                 print "[glusterfs_registry]"
-                print  met_log_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
-                print  met_log_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
-                print  met_log_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
+                print  met_log_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
+                print  met_log_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
+                print  met_log_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
                 print "   "
 
         elif avail_hosts == 6:
@@ -825,15 +823,15 @@ elif choice == 4:
                 print "   "
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print "  "
 
                 print "[glusterfs_registry]"
-                print  met_log_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
-                print  met_log_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
-                print  met_log_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
+                print  met_log_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
+                print  met_log_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
+                print  met_log_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
                 print "   "
 
         elif avail_hosts == 4:
@@ -895,10 +893,10 @@ elif choice == 4:
                           
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print "    "
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
@@ -961,9 +959,9 @@ elif choice == 4:
                           
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print " "
                 
         
@@ -993,10 +991,10 @@ elif choice == 5:
                 print "   "
 
                 print "[glusterfs] "        
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
 
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").split(" ")
@@ -1016,9 +1014,9 @@ elif choice == 5:
                 print "   "
 
                 print  "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
    
        
 else:

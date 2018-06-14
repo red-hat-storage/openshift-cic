@@ -234,15 +234,15 @@ elif choice == 2:
                 
                 print "[glusterfs]"
                 print  app_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_devices=" +  "'" + json.dumps(raw_devices) + "'"
+                print  app_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print  app_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print  app_hosts[3] + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
                 print " "
 
                 print "[glusterfs_registry]"
-                print  log_hosts[0] + "'" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
-                print  log_hosts[1] + "'" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
-                print  log_hosts[2] + "'" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
+                print  log_hosts[0] + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
+                print  log_hosts[1] + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
+                print  log_hosts[2] + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
         
         elif avail_hosts == 6:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")

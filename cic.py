@@ -123,6 +123,7 @@ if choice == 1:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
 
@@ -154,6 +155,7 @@ if choice == 1:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
 
@@ -202,6 +204,7 @@ elif choice == 2:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
         
@@ -270,6 +273,7 @@ elif choice == 2:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
         
@@ -332,6 +336,7 @@ elif choice == 2:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
         
@@ -387,6 +392,7 @@ elif choice == 2:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
         
@@ -452,6 +458,7 @@ elif choice == 3:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
         
@@ -519,6 +526,7 @@ elif choice == 3:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
         
@@ -577,6 +585,7 @@ elif choice == 3:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
         
@@ -632,6 +641,7 @@ elif choice == 3:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
         
@@ -700,6 +710,7 @@ elif choice == 4:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
 
@@ -782,6 +793,7 @@ elif choice == 4:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
 
@@ -856,6 +868,7 @@ elif choice == 4:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
 
@@ -922,6 +935,7 @@ elif choice == 4:
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
 

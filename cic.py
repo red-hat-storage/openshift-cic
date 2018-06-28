@@ -122,7 +122,7 @@ if choice == 1:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -154,7 +154,7 @@ if choice == 1:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -203,7 +203,7 @@ elif choice == 2:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -211,7 +211,7 @@ elif choice == 2:
                 print "# logging"
                 print "openshift_logging_install_logging=true"
                 print "openshift_logging_es_pvc_dynamic=true "
-                print "openshift_logging_es_pvc_size= %d" % logging_pvsize
+                print "openshift_logging_es_pvc_size=%d" % logging_pvsize+"Gi"
                 print "openshift_logging_es_cluster_size=%d" % replica_log
                 print "openshift_logging_es_pvc_storage_class_name='glusterfs-registry-block'"
                 print "openshift_logging_kibana_nodeselector={\"region\":\"infra\"}"
@@ -272,7 +272,7 @@ elif choice == 2:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -280,7 +280,7 @@ elif choice == 2:
                 print "# logging"
                 print "openshift_logging_install_logging=true"
                 print "openshift_logging_es_pvc_dynamic=true "
-                print "openshift_logging_es_pvc_size= %d" % logging_pvsize
+                print "openshift_logging_es_pvc_size=%d" % logging_pvsize+"Gi"
                 print "openshift_logging_es_cluster_size=%d" % replica_log
                 print "openshift_logging_es_pvc_storage_class_name='glusterfs-registry-block'"
                 print "openshift_logging_kibana_nodeselector={\"region\":\"infra\"}"
@@ -335,7 +335,7 @@ elif choice == 2:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -343,7 +343,7 @@ elif choice == 2:
                 print "# logging"
                 print "openshift_logging_install_logging=true"
                 print "openshift_logging_es_pvc_dynamic=true "
-                print "openshift_logging_es_pvc_size= %d" % logging_pvsize
+                print "openshift_logging_es_pvc_size=%d" % logging_pvsize+"Gi"
                 print "openshift_logging_es_cluster_size=%d" % replica_log
                 print "openshift_logging_es_pvc_storage_class_name='glusterfs-storage-block'"
                 print "openshift_logging_kibana_nodeselector={\"region\":\"infra\"}"
@@ -391,7 +391,7 @@ elif choice == 2:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -399,7 +399,7 @@ elif choice == 2:
                 print "# logging"
                 print "openshift_logging_install_logging=true"
                 print "openshift_logging_es_pvc_dynamic=true "
-                print "openshift_logging_es_pvc_size= %d" % logging_pvsize
+                print "openshift_logging_es_pvc_size=%d" % logging_pvsize+"Gi"
                 print "openshift_logging_es_cluster_size=%d" % replica_log
                 print "openshift_logging_es_pvc_storage_class_name='glusterfs-storage-block'"
                 print "openshift_logging_kibana_nodeselector={\"region\":\"infra\"}"
@@ -457,7 +457,7 @@ elif choice == 3:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -465,7 +465,7 @@ elif choice == 3:
                 print "# metrics"
                 print "openshift_metrics_install_metrics=true "
                 print "openshift_metrics_storage_kind=dynamic"
-                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize
+                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize+"Gi"
                 print "openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-registry-block'"
                 print "openshift_metrics_hawkular_nodeselector:{\"region\":\"infra\"}"
                 print "openshift_metrics_cassandra_nodeselector:{\"region\":\"infra\"}"
@@ -525,7 +525,7 @@ elif choice == 3:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -533,7 +533,7 @@ elif choice == 3:
                 print "# metrics"
                 print "openshift_metrics_install_metrics=true "
                 print "openshift_metrics_storage_kind=dynamic"
-                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize
+                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize+"Gi"
                 print "openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-registry-block'"
                 print "openshift_metrics_hawkular_nodeselector:{\"region\":\"infra\"}"
                 print "openshift_metrics_cassandra_nodeselector:{\"region\":\"infra\"}"
@@ -584,7 +584,7 @@ elif choice == 3:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -592,7 +592,7 @@ elif choice == 3:
                 print "# metrics"
                 print "openshift_metrics_install_metrics=true "
                 print "openshift_metrics_storage_kind=dynamic"
-                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize
+                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize+"Gi"
                 print "openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-storage-block'"
                 print "openshift_metrics_hawkular_nodeselector:{\"region\":\"infra\"}"
                 print "openshift_metrics_cassandra_nodeselector:{\"region\":\"infra\"}"
@@ -640,7 +640,7 @@ elif choice == 3:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -648,7 +648,7 @@ elif choice == 3:
                 print "# metrics"
                 print "openshift_metrics_install_metrics=true "
                 print "openshift_metrics_storage_kind=dynamic"
-                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize
+                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize+"Gi"
                 print "openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-storage-block'"
                 print "openshift_metrics_hawkular_nodeselector:{\"region\":\"infra\"}"
                 print "openshift_metrics_cassandra_nodeselector:{\"region\":\"infra\"}"
@@ -709,7 +709,7 @@ elif choice == 4:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -717,7 +717,7 @@ elif choice == 4:
                 print "# logging"
                 print "openshift_logging_install_logging=true"
                 print "openshift_logging_es_pvc_dynamic=true "
-                print "openshift_logging_es_pvc_size= %d" % logging_pvsize
+                print "openshift_logging_es_pvc_size=%d" % logging_pvsize+"Gi"
                 print "openshift_logging_es_cluster_size=%d" % replica_log
                 print "openshift_logging_es_pvc_storage_class_name='glusterfs-registry-block'"
                 print "openshift_logging_kibana_nodeselector={\"region\":\"infra\"}"
@@ -728,7 +728,7 @@ elif choice == 4:
                 print "# metrics"
                 print "openshift_metrics_install_metrics=true "
                 print "openshift_metrics_storage_kind=dynamic"
-                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize
+                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize+"Gi"
                 print "openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-registry-block'"
                 print "openshift_metrics_hawkular_nodeselector:{\"region\":\"infra\"}"
                 print "openshift_metrics_cassandra_nodeselector:{\"region\":\"infra\"}"
@@ -792,7 +792,7 @@ elif choice == 4:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -800,7 +800,7 @@ elif choice == 4:
                 print "# logging"
                 print "openshift_logging_install_logging=true"
                 print "openshift_logging_es_pvc_dynamic=true "
-                print "openshift_logging_es_pvc_size= %d" % logging_pvsize
+                print "openshift_logging_es_pvc_size=%d" % logging_pvsize+"Gi"
                 print "openshift_logging_es_cluster_size=%d" % replica_log
                 print "openshift_logging_es_pvc_storage_class_name=''glusterfs-registry-block'"
                 print "openshift_logging_kibana_nodeselector={\"region\":\"infra\"}"
@@ -811,7 +811,7 @@ elif choice == 4:
                 print "# metrics"
                 print "openshift_metrics_install_metrics=true "
                 print "openshift_metrics_storage_kind=dynamic"
-                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize
+                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize+"Gi"
                 print "openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-registry-block'"
                 print "openshift_metrics_hawkular_nodeselector:{\"region\":\"infra\"}"
                 print "openshift_metrics_cassandra_nodeselector:{\"region\":\"infra\"}"
@@ -867,7 +867,7 @@ elif choice == 4:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -875,7 +875,7 @@ elif choice == 4:
                 print "# logging"
                 print "openshift_logging_install_logging=true"
                 print "openshift_logging_es_pvc_dynamic=true "
-                print "openshift_logging_es_pvc_size= %d" % logging_pvsize
+                print "openshift_logging_es_pvc_size=%d" % logging_pvsize+"Gi"
                 print "openshift_logging_es_cluster_size=%d" % replica_log
                 print "openshift_logging_es_pvc_storage_class_name='glusterfs-storage-block'"
                 print "openshift_logging_kibana_nodeselector={\"region\":\"infra\"}"
@@ -886,7 +886,7 @@ elif choice == 4:
                 print "# metrics"
                 print "openshift_metrics_install_metrics=true "
                 print "openshift_metrics_storage_kind=dynamic"
-                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize
+                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize+"Gi"
                 print "openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-storage-block'"
                 print "openshift_metrics_hawkular_nodeselector:{\"region\":\"infra\"}"
                 print "openshift_metrics_cassandra_nodeselector:{\"region\":\"infra\"}"
@@ -934,7 +934,7 @@ elif choice == 4:
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_replicas=3"
                 print "openshift_hosted_registry_selector={\"region\":\"infra\"}" 
                 print "   "
@@ -942,7 +942,7 @@ elif choice == 4:
                 print "# logging"
                 print "openshift_logging_install_logging=true"
                 print "openshift_logging_es_pvc_dynamic=true "
-                print "openshift_logging_es_pvc_size= %d" % logging_pvsize
+                print "openshift_logging_es_pvc_size=%d" % logging_pvsize+"Gi"
                 print "openshift_logging_es_cluster_size=%d" % replica_log
                 print "openshift_logging_es_pvc_storage_class_name='glusterfs-storage-block'"
                 print "openshift_logging_kibana_nodeselector={\"region\":\"infra\"}"
@@ -953,7 +953,7 @@ elif choice == 4:
                 print "# metrics"
                 print "openshift_metrics_install_metrics=true "
                 print "openshift_metrics_storage_kind=dynamic"
-                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize
+                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize+"Gi"
                 print "openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-storage-block'"
                 print "openshift_metrics_hawkular_nodeselector:{\"region\":\"infra\"}"
                 print "openshift_metrics_cassandra_nodeselector:{\"region\":\"infra\"}"

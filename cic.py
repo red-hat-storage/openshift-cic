@@ -120,6 +120,8 @@ if choice == 1:
                 print "glusterfs"
                 print "   "
 
+                print "[OSEv3:vars]"
+
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -150,6 +152,8 @@ if choice == 1:
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "   "
+
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -198,6 +202,8 @@ elif choice == 2:
                 print "glusterfs"
                 print "glusterfs_registry"
                 print "  "
+
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -267,6 +273,8 @@ elif choice == 2:
                 print "glusterfs_registry"
                 print "  "
 
+                print "[OSEv3:vars]"
+
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -328,6 +336,7 @@ elif choice == 2:
                 print "glusterfs"
                 print "   "
 
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -383,6 +392,7 @@ elif choice == 2:
                 print "glusterfs"
                 print "   "
 
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -447,7 +457,9 @@ elif choice == 3:
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "glusterfs_registry"
-                print "   " 
+                print "   "
+
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -514,7 +526,9 @@ elif choice == 3:
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "glusterfs_registry"
-                print "   " 
+                print "   "
+
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -572,7 +586,9 @@ elif choice == 3:
                 print "  "        
                 print "[OSEv3:children]"
                 print "glusterfs"
-                print "   " 
+                print "   "
+
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -627,7 +643,9 @@ elif choice == 3:
                 print "  "        
                 print "[OSEv3:children]"
                 print "glusterfs"
-                print "   " 
+                print "   "
+
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -695,7 +713,9 @@ elif choice == 4:
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "glusterfs_registry"
-                print "   " 
+                print "   "
+
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -777,7 +797,9 @@ elif choice == 4:
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "glusterfs_registry"
-                print "   " 
+                print "   "
+
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -851,7 +873,9 @@ elif choice == 4:
                 print " "        
                 print "[OSEv3:children]"
                 print "glusterfs"
-                print "   " 
+                print "   "
+
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -917,7 +941,9 @@ elif choice == 4:
                 print "  "        
                 print "[OSEv3:children]"
                 print "glusterfs"
-                print "   " 
+                print "   "
+
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -983,6 +1009,8 @@ elif choice == 5:
                 print "glusterfs"
                 print "  "
 
+                print "[OSEv3:vars]"
+
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
                 print "openshift_storage_glusterfs_storageclass=true"
@@ -1005,6 +1033,8 @@ elif choice == 5:
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "  "
+
+                print "[OSEv3:vars]"
 
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"

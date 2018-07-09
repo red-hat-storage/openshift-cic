@@ -116,11 +116,21 @@ if choice == 1:
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
 
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version 
-                print "  " 
 
+
+                print "[OSEv3:children]"
+                print "glusterfs"
+                print "   "
+
+                print "[OSEv3:vars]"
+
+                print "# registry"
+                print "openshift_hosted_registry_storage_kind=glusterfs"
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
+                print "openshift_hosted_registry_selector=\"region=infra\"" 
+                print "   "
+                
+                print "    "
                 print "# Container image to use for glusterfs pods"
                 print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
                 print "openshift_storage_glusterfs_version=v%s" % ocp_version
@@ -134,15 +144,6 @@ if choice == 1:
                 print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
                 print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
                 print "    "
-                print "[OSEv3:children]"
-                print "glusterfs"
-                print "   "
-
-                print "# registry"
-                print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
-                print "openshift_hosted_registry_selector=\"region=infra\"" 
-                print "   "
 
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
@@ -162,11 +163,18 @@ if choice == 1:
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
 
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version 
-                print "  " 
+                print "    "
+                print "[OSEv3:children]"
+                print "glusterfs"
+                print "   "
 
+                print "[OSEv3:vars]"
+
+                print "# registry"
+                print "openshift_hosted_registry_storage_kind=glusterfs"
+                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
+                print "openshift_hosted_registry_selector=\"region=infra\"" 
+                print "   "
                 print "# Container image to use for glusterfs pods"
                 print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
                 print "openshift_storage_glusterfs_version=v%s" % ocp_version
@@ -180,18 +188,6 @@ if choice == 1:
                 print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
                 print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
                 print "    "
-
-                print "    "
-                print "[OSEv3:children]"
-                print "glusterfs"
-                print "   "
-
-                print "# registry"
-                print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
-                print "openshift_hosted_registry_selector=\"region=infra\"" 
-                print "   "
-
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
                 print "openshift_storage_glusterfs_storageclass=true"
@@ -210,6 +206,7 @@ elif choice == 2:
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
 
         if avail_hosts >= 6:
+
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
                 host_not_valid()
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
@@ -225,32 +222,14 @@ elif choice == 2:
                 
                 min_block_host_vol_size =  (logging_pvsize * replica_log) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
-
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version 
-                print "  " 
-
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version
-                print "  "
-
-                print "# Container image to use for glusterblock-provisioner pod"
-                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
-                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
-                print "  "
-                print "# Container image to use for heketi pods"
-                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
-                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
-                print "    "
-
+                
                 print "   " 
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "glusterfs_registry"
                 print "  "
 
+                print "[OSEv3:vars]"
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -267,6 +246,21 @@ elif choice == 2:
                 print "openshift_logging_curator_nodeselector={\"region\":\"infra\"}"
                 print "openshift_logging_es_nodeselector={\"region\":\"infra\"}"
                 print "  "  
+            
+         
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
+                print "  "
+
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    "
         
                 print "# CNS storage cluster for applications"
                 print "openshift_storage_glusterfs_namespace=app-storage"
@@ -305,11 +299,12 @@ elif choice == 2:
                 min_block_host_vol_size =  (logging_pvsize * replica_log) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
+                print "    "
+                print "[OSEv3:children]"
+                print "glusterfs"
+                print "   "
 
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version 
-                print "  " 
+
 
                 print "# Container image to use for glusterfs pods"
                 print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
@@ -330,6 +325,7 @@ elif choice == 2:
                 print "glusterfs"
                 print "   "
 
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -358,6 +354,7 @@ elif choice == 2:
                 print "openshift_storage_glusterfs_block_storageclass=true"
                 print "openshift_storage_glusterfs_block_storageclass_default=false"
                 print "   "
+
                           
                 print "[glusterfs]"
                 for app_host in app_hosts:
@@ -371,7 +368,7 @@ elif choice == 3:
         print (60 * '-' )
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
 
-        if avail_hosts >= 7:
+        if avail_hosts >= 6:
                           
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
                 host_not_valid()
@@ -388,29 +385,13 @@ elif choice == 3:
                 min_block_host_vol_size =  ( metrics_pvsize * replica_metrics) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version 
-                print "  " 
-
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version
-                print "  "
-
-                print "# Container image to use for glusterblock-provisioner pod"
-                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
-                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
-                print "  "
-                print "# Container image to use for heketi pods"
-                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
-                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
-                print "    "
-                print "  "        
+      
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "glusterfs_registry"
-                print "   " 
+                print "   "
+
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -427,6 +408,20 @@ elif choice == 3:
                 print "openshift_metrics_cassandra_nodeselector={\"region\":\"infra\"}"
                 print "openshift_metrics_heapster_nodeselector={\"region\":\"infra\"}"
                 print "   "
+
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
+                print "  "
+
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    "
 
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
@@ -466,30 +461,13 @@ elif choice == 3:
                 
                 min_block_host_vol_size =  ( metrics_pvsize * replica_metrics) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
-              
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version 
-                print "  " 
-
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version
-                print "  "
-
-                print "# Container image to use for glusterblock-provisioner pod"
-                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
-                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
-                print "  "
-                print "# Container image to use for heketi pods"
-                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
-                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
-                print "    "
             
+          
                 print "[OSEv3:children]"
                 print "glusterfs"
-                print "   " 
+                print "   "
 
+                print "[OSEv3:vars]"
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -506,6 +484,19 @@ elif choice == 3:
                 print "openshift_metrics_heapster_nodeselector={\"region\":\"infra\"}"
                 print "   "
 
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
+                print "  "
+
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    "
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
                 print "openshift_storage_glusterfs_storageclass=true"
@@ -533,7 +524,6 @@ elif choice == 4:
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
 
         if avail_hosts >= 6:
-                
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
                 host_not_valid()
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
@@ -551,29 +541,13 @@ elif choice == 4:
                 min_block_host_vol_size =  (logging_pvsize *  replica_log) + (replica_metrics * metrics_pvsize)
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version 
-                print "  " 
-
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version
-                print "  "
-
-                print "# Container image to use for glusterblock-provisioner pod"
-                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
-                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
-                print "  "
-                print "# Container image to use for heketi pods"
-                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
-                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
-                print "    "
                 print "  "        
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "glusterfs_registry"
-                print "   " 
+                print "   "
+
+                print "[OSEv3:vars]"
 
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
@@ -601,6 +575,21 @@ elif choice == 4:
                 print "openshift_metrics_cassandra_nodeselector={\"region\":\"infra\"}"
                 print "openshift_metrics_heapster_nodeselector={\"region\":\"infra\"}"
                 print "   "
+                
+                
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
+                print "  "
+
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    "
 
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
@@ -627,7 +616,7 @@ elif choice == 4:
                 for met_log_host in met_log_hosts:
                         print  met_log_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
                 print "   "
-     
+
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
                 host_not_valid()
@@ -643,25 +632,7 @@ elif choice == 4:
                 min_block_host_vol_size =  (logging_pvsize *  replica_log) + (replica_metrics * metrics_pvsize)
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
              
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version 
-                print "  " 
 
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version
-                print "  "
-
-                print "# Container image to use for glusterblock-provisioner pod"
-                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
-                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
-                print "  "
-                print "# Container image to use for heketi pods"
-                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
-                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
-                print "    "
-                print "  "        
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "   " 
@@ -692,6 +663,21 @@ elif choice == 4:
                 print "openshift_metrics_cassandra_nodeselector={\"region\":\"infra\"}"
                 print "openshift_metrics_heapster_nodeselector={\"region\":\"infra\"}"
                 print "   "
+
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
+                print "  "
+
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    "
+       
 
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
@@ -724,12 +710,13 @@ elif choice == 5:
                 raw_devices = raw_input("What are the raw storage devices these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device(s) ?: "))
 
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version 
-                print "  " 
 
-                print "# Container image to use for glusterfs pods"
+                print "[OSEv3:children]"
+                print "glusterfs"
+                print "  "
+
+                print "[OSEv3:vars]"
+		print "# Container image to use for glusterfs pods"
                 print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
                 print "openshift_storage_glusterfs_version=v%s" % ocp_version
                 print "  "
@@ -742,11 +729,7 @@ elif choice == 5:
                 print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
                 print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
                 print "    "                
-                print "  "
-                print "[OSEv3:children]"
-                print "glusterfs"
-                print "  "
-
+                
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
                 print "openshift_storage_glusterfs_storageclass=true"
@@ -765,12 +748,13 @@ elif choice == 5:
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
  
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version 
-                print "  " 
+                print "  "
+                print "[OSEv3:children]"
+                print "glusterfs"
+                print "  "
 
-                print "# Container image to use for glusterfs pods"
+                print "[OSEv3:vars]"
+		print "# Container image to use for glusterfs pods"
                 print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
                 print "openshift_storage_glusterfs_version=v%s" % ocp_version
                 print "  "
@@ -783,11 +767,8 @@ elif choice == 5:
                 print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
                 print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
                 print "    " 
-                print "  "
-                print "[OSEv3:children]"
-                print "glusterfs"
-                print "  "
-
+		
+		
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
                 print "openshift_storage_glusterfs_storageclass=true"

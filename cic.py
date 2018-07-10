@@ -116,12 +116,7 @@ if choice == 1:
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
 
-                if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
-                        print "larger than the raw storage device size\033[0m"
-                        exit()  
-
-
+                
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "   "
@@ -166,11 +161,6 @@ if choice == 1:
                 raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
-
-                if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
-                        print "larger than the raw storage device size\033[0m"
-                        exit()
 
                 print "    "
                 print "[OSEv3:children]"
@@ -233,22 +223,7 @@ elif choice == 2:
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
 
-                # Two cluster total storage calculation
-                cluster_storage = len(raw_devices) * raw_storage_size * len(app_hosts)
-                block_calc = registry_pvsize + block_host_size
-                totalcalc = block_calc
-
-                print "# Cluster 1"
-                print "# Total Storage allocated (GB) = 0"
-                print "# Total Storage available (GB) = %d" % raw_storage_size
-                print "# Cluster 2"
-                print "# Total Storage allocated (GB) = %d" % totalcalc
-                print "# Total Storage available (GB) = %d" % cluster_storage
-                if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
-                        print "larger than the raw storage device size\033[0m"
-                        exit()
-                
+                             
                 print "   " 
                 print "[OSEv3:children]"
                 print "glusterfs"
@@ -328,14 +303,6 @@ elif choice == 2:
                 cluster_storage = len(raw_devices) * raw_storage_size * len(app_hosts)
                 block_calc = registry_pvsize + block_host_size
                 totalcalc = block_calc
-
-                print "# Cluster 1"
-                print "# Total Storage allocated (GB) = %d" % totalcalc
-                print "# Total Storage available (GB) = %d" % cluster_storage
-                if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
-                        print "larger than the raw storage device size\033[0m"
-                        exit()
 
                 print "    "
                 print "[OSEv3:children]"
@@ -417,23 +384,7 @@ elif choice == 3:
                 min_block_host_vol_size =  ( metrics_pvsize * replica_metrics) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
-                # Two cluster total storage calculation
-                cluster_storage = len(raw_devices) * raw_storage_size * len(app_hosts)
-                block_calc = registry_pvsize + block_host_size
-                totalcalc = block_calc
-
-                print "# Cluster 1"
-                print "# Total Storage allocated (GB) = 0"
-                print "# Total Storage available (GB) = %d" % raw_storage_size
-                print "# Cluster 2"
-                print "# Total Storage allocated (GB) = %d" % totalcalc
-                print "# Total Storage available (GB) = %d" % cluster_storage
-                if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
-                        print "larger than the raw storage device size\033[0m"
-                        exit()
-
-      
+                      
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "glusterfs_registry"
@@ -511,19 +462,7 @@ elif choice == 3:
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
 
-                cluster_storage = len(raw_devices) * raw_storage_size * len(app_hosts)
-                block_calc = registry_pvsize + block_host_size
-                totalcalc = block_calc
-
-                print "# Cluster 1"
-                print "# Total Storage allocated (GB) = %d" % totalcalc
-                print "# Total Storage available (GB) = %d" % cluster_storage
-                if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
-                        print "larger than the raw storage device size\033[0m"
-                        exit()
-            
-          
+               
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "   "
@@ -601,23 +540,6 @@ elif choice == 4:
                 
                 min_block_host_vol_size =  (logging_pvsize *  replica_log) + (replica_metrics * metrics_pvsize)
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
-
-
-                # Two cluster total storage calculation
-                cluster_storage = len(raw_devices) * raw_storage_size * len(app_hosts)
-                block_calc = registry_pvsize + block_host_size
-                totalcalc = block_calc
-
-                print "# Cluster 1"
-                print "# Total Storage allocated (GB) = 0"
-                print "# Total Storage available (GB) = %d" % raw_storage_size
-                print "# Cluster 2"
-                print "# Total Storage allocated (GB) = %d" % totalcalc
-                print "# Total Storage available (GB) = %d" % cluster_storage
-                if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
-                        print "larger than the raw storage device size\033[0m"
-                        exit()
 
                 print "  "        
                 print "[OSEv3:children]"
@@ -710,19 +632,6 @@ elif choice == 4:
                 min_block_host_vol_size =  (logging_pvsize *  replica_log) + (replica_metrics * metrics_pvsize)
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
              
-                cluster_storage = len(raw_devices) * raw_storage_size * len(app_hosts)
-                block_calc = registry_pvsize + block_host_size
-                totalcalc = block_calc
-      
-                print "# Cluster 1"
-                print "# Total Storage allocated (GB) = %d" % totalcalc
-                print "# Total Storage available (GB) = %d" % cluster_storage 
-                if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
-                        print "larger than the raw storage device size\033[0m"
-                        exit()
-
-
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "   " 

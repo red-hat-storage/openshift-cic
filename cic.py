@@ -342,27 +342,6 @@ elif choice == 2:
                 print "glusterfs"
                 print "   "
 
-
-
-                print "# Container image to use for glusterfs pods"
-                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
-                print "openshift_storage_glusterfs_version=v%s" % ocp_version
-                print "  "
-
-                print "# Container image to use for glusterblock-provisioner pod"
-                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
-                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
-                print "  "
-                print "# Container image to use for heketi pods"
-                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
-                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
-                print "    "
-
-                print "    "
-                print "[OSEv3:children]"
-                print "glusterfs"
-                print "   "
-
                 print "[OSEv3:vars]"
 
                 print "# registry"
@@ -381,6 +360,21 @@ elif choice == 2:
                 print "openshift_logging_curator_nodeselector={\"region\":\"infra\"}"
                 print "openshift_logging_es_nodeselector={\"region\":\"infra\"}"
                 print "  "  
+                
+                
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
+                print "  "
+
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    "
         
                 print "# CNS storage cluster for applications"
                 print "openshift_storage_glusterfs_namespace=app-storage"
@@ -733,6 +727,8 @@ elif choice == 4:
                 print "glusterfs"
                 print "   " 
 
+		print "[OSEv3:vars]"
+                print "    "
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"

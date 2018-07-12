@@ -23,8 +23,10 @@ from argparse import RawTextHelpFormatter
 import pprint
 import re
 import json
+import random
 
 # regular expression to validate FQDN or IP based on RFCs
+ocp_version = '3.9'
 
 def is_valid_hostname(hostname):
     if len(hostname) > 255:
@@ -106,27 +108,41 @@ if choice == 1:
         print (60 * '-')
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
 
-        if avail_hosts == 4:
+        if avail_hosts >= 4:
                 
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").split(" ")
                 host_not_valid() 
                 raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
-
-                           
-                print "    "
+                zone = [1,2,3] 
+                
+                print "   "
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "   "
 
                 print "[OSEv3:vars]"
-
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_selector=\"region=infra\"" 
                 print "   "
+                
+                print "    "
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
+                print "  "
+
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    "
 
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
@@ -136,10 +152,15 @@ if choice == 1:
                 print "   "
 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+
 
         else :
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").split(" ")
@@ -147,20 +168,31 @@ if choice == 1:
                 raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
-
+                zone = [1,2,3]
                 print "    "
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "   "
 
                 print "[OSEv3:vars]"
-
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
                 print "openshift_hosted_registry_selector=\"region=infra\"" 
                 print "   "
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
+                print "  "
 
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    "
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
                 print "openshift_storage_glusterfs_storageclass=true"
@@ -168,11 +200,15 @@ if choice == 1:
                 print "openshift_storage_glusterfs_block_deploy=false"
                 print "   "
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"       
-        
-                
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+             
 elif choice == 2:
         print (60 * '-')
         print ("For this configuration 7 nodes are recommended")
@@ -180,7 +216,8 @@ elif choice == 2:
         print (60 * '-' )
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
 
-        if avail_hosts == 7:
+        if avail_hosts >= 6:
+
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
                 host_not_valid()
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
@@ -192,11 +229,13 @@ elif choice == 2:
                 host_in_use()
                 log_devices = raw_input("What are the raw storage devices for logging backend on these hosts (/dev/<device>) ?: ").split(" ")
                 log_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
-                
+                zone = [1,2,3]
                 
                 min_block_host_vol_size =  (logging_pvsize * replica_log) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
+
+                             
                 print "   " 
                 print "[OSEv3:children]"
                 print "glusterfs"
@@ -204,7 +243,6 @@ elif choice == 2:
                 print "  "
 
                 print "[OSEv3:vars]"
-
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -221,160 +259,58 @@ elif choice == 2:
                 print "openshift_logging_curator_nodeselector={\"region\":\"infra\"}"
                 print "openshift_logging_es_nodeselector={\"region\":\"infra\"}"
                 print "  "  
-        
-                print "# CNS storage cluster for applications"
-                print "openshift_storage_glusterfs_namespace=app-storage"
-                print "openshift_storage_glusterfs_storageclass=true"
-                print "openshift_storage_glusterfs_storageclass_default=false"
-                print "   "
-
-                print "# CNS storage for OpenShift infrastructure"
-                print "openshift_storage_glusterfs_registry_namespace=infra-storage"
-                print "openshift_storage_glusterfs_registry_storageclass=false"
-                print "openshift_storage_glusterfs_registry_block_deploy=true"
-                print "openshift_storage_glusterfs_registry_block_host_vol_create=true"
-                print "openshift_storage_glusterfs_registry_block_host_vol_size=%d" % block_host_size
-                print "openshift_storage_glusterfs_registry_block_storageclass=true"
-                print "openshift_storage_glusterfs_registry_block_storageclass_default=false"
-                print "   "
-                
-                print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print " "
-
-                print "[glusterfs_registry]"
-                print  log_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
-                print  log_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
-                print  log_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
-        
-        elif avail_hosts == 6:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
-                host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
-                raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
-                registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
-                replica_log = int(raw_input("How many replicas for logging ?: "))
-                logging_pvsize = int(raw_input("What is the size for each logging persistent volume (GB) ?: "))
-                log_hosts =  raw_input("What hosts will be used for CNS logging backend storage  (IP/FQDN) ?:  ").split(" ") 
-                host_in_use()
-                log_devices = raw_input("What are the raw storage devices for logging backend on these hosts (/dev/<device>) ?: ").split(" ")
-                log_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
-                
-                
-                min_block_host_vol_size =  (logging_pvsize * replica_log) 
-                block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
-                
-                print "   " 
-                print "[OSEv3:children]"
-                print "glusterfs"
-                print "glusterfs_registry"
+            
+         
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
                 print "  "
 
-                print "[OSEv3:vars]"
-
-                print "# registry"
-                print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
-                print "openshift_hosted_registry_selector=\"region=infra\"" 
-                print "   "
-        
-                print "# logging"
-                print "openshift_logging_install_logging=true"
-                print "openshift_logging_es_pvc_dynamic=true "
-                print "openshift_logging_es_pvc_size=%d" % logging_pvsize+"Gi"
-                print "openshift_logging_es_cluster_size=%d" % replica_log
-                print "openshift_logging_es_pvc_storage_class_name='glusterfs-registry-block'"
-                print "openshift_logging_kibana_nodeselector={\"region\":\"infra\"}"
-                print "openshift_logging_curator_nodeselector={\"region\":\"infra\"}"
-                print "openshift_logging_es_nodeselector={\"region\":\"infra\"}"
-                print "  "  
-        
-                print "# CNS storage cluster for applications"
-                print "openshift_storage_glusterfs_namespace=app-storage"
-                print "openshift_storage_glusterfs_storageclass=true"
-                print "openshift_storage_glusterfs_storageclass_default=false"
-                print "   "
-
-                print "# CNS storage for OpenShift infrastructure"
-                print "openshift_storage_glusterfs_registry_namespace=infra-storage"
-                print "openshift_storage_glusterfs_registry_storageclass=false"
-                print "openshift_storage_glusterfs_registry_block_deploy=true"
-                print "openshift_storage_glusterfs_registry_block_host_vol_create=true"
-                print "openshift_storage_glusterfs_registry_block_host_vol_size=%d" % block_host_size
-                print "openshift_storage_glusterfs_registry_block_storageclass=true"
-                print "openshift_storage_glusterfs_registry_block_storageclass_default=false"
-                print "   "
-                
-                print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
                 print "  "
-
-                print "[glusterfs_registry]"
-                print  log_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
-                print  log_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
-                print  log_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
-
-        elif avail_hosts == 4:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
-                host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
-                raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
-                registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
-                replica_log = int(raw_input("How many replicas for logging ?: "))
-                logging_pvsize = int(raw_input("What is the size for each logging persistent volume (GB) ?: "))
-
-                min_block_host_vol_size =  (logging_pvsize * replica_log) 
-                block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
-
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
                 print "    "
-                print "[OSEv3:children]"
-                print "glusterfs"
-                print "   "
-
-                print "[OSEv3:vars]"
-
-                print "# registry"
-                print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
-                print "openshift_hosted_registry_selector=\"region=infra\"" 
-                print "   "
-        
-                print "# logging"
-                print "openshift_logging_install_logging=true"
-                print "openshift_logging_es_pvc_dynamic=true "
-                print "openshift_logging_es_pvc_size=%d" % logging_pvsize+"Gi"
-                print "openshift_logging_es_cluster_size=%d" % replica_log
-                print "openshift_logging_es_pvc_storage_class_name='glusterfs-storage-block'"
-                print "openshift_logging_kibana_nodeselector={\"region\":\"infra\"}"
-                print "openshift_logging_curator_nodeselector={\"region\":\"infra\"}"
-                print "openshift_logging_es_nodeselector={\"region\":\"infra\"}"
-                print "  "  
         
                 print "# CNS storage cluster for applications"
                 print "openshift_storage_glusterfs_namespace=app-storage"
                 print "openshift_storage_glusterfs_storageclass=true"
                 print "openshift_storage_glusterfs_storageclass_default=false"
-                print "openshift_storage_glusterfs_block_deploy=true"
-                print "openshift_storage_glusterfs_block_host_vol_create=true"
-                print "openshift_storage_glusterfs_block_host_vol_size=%d" % block_host_size
-                print "openshift_storage_glusterfs_block_storageclass=true"
-                print "openshift_storage_glusterfs_block_storageclass_default=false"
                 print "   "
 
-                          
-                print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print "# CNS storage for OpenShift infrastructure"
+                print "openshift_storage_glusterfs_registry_namespace=infra-storage"
+                print "openshift_storage_glusterfs_registry_storageclass=false"
+                print "openshift_storage_glusterfs_registry_block_deploy=true"
+                print "openshift_storage_glusterfs_registry_block_host_vol_create=true"
+                print "openshift_storage_glusterfs_registry_block_host_vol_size=%d" % block_host_size
+                print "openshift_storage_glusterfs_registry_block_storageclass=true"
+                print "openshift_storage_glusterfs_registry_block_storageclass_default=false"
+                print "   "
                 
-                        
+                print "[glusterfs]"
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+                print "   "
 
+                print "[glusterfs_registry]"
+                j = 0
+                for log_host in log_hosts:
+                        if j > 2:
+                                j = 0
+                        z = zone[j]
+                        print (log_host + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'")
+                        j += 1
+                print "  "
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
                 host_not_valid()
@@ -383,9 +319,13 @@ elif choice == 2:
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_log = int(raw_input("How many replicas for logging ?: "))
                 logging_pvsize = int(raw_input("What is the size for each logging persistent volume (GB) ?: "))
-
+                zone = [1,2,3]
                 min_block_host_vol_size =  (logging_pvsize * replica_log) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
+
+                cluster_storage = len(raw_devices) * raw_storage_size * len(app_hosts)
+                block_calc = registry_pvsize + block_host_size
+                totalcalc = block_calc
 
                 print "    "
                 print "[OSEv3:children]"
@@ -393,7 +333,6 @@ elif choice == 2:
                 print "   "
 
                 print "[OSEv3:vars]"
-
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -410,6 +349,21 @@ elif choice == 2:
                 print "openshift_logging_curator_nodeselector={\"region\":\"infra\"}"
                 print "openshift_logging_es_nodeselector={\"region\":\"infra\"}"
                 print "  "  
+                
+                
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
+                print "  "
+
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    "
         
                 print "# CNS storage cluster for applications"
                 print "openshift_storage_glusterfs_namespace=app-storage"
@@ -424,10 +378,15 @@ elif choice == 2:
 
                           
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-               
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+
 
 elif choice == 3:
         print (60 * '-')
@@ -436,7 +395,7 @@ elif choice == 3:
         print (60 * '-' )
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
 
-        if avail_hosts == 7:
+        if avail_hosts >= 6:
                           
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
                 host_not_valid()
@@ -449,11 +408,12 @@ elif choice == 3:
                 met_in_use()
                 met_devices = raw_input("What are the raw storage devices for metrics backend on these hosts (/dev/<device>) ?: ").split(" ")
                 met_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
-                
+                zone = [1,2,3]
+
                 min_block_host_vol_size =  ( metrics_pvsize * replica_metrics) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
-                print "  "        
+                      
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "glusterfs_registry"
@@ -477,74 +437,19 @@ elif choice == 3:
                 print "openshift_metrics_heapster_nodeselector={\"region\":\"infra\"}"
                 print "   "
 
-                print "# CNS storage cluster"
-                print "openshift_storage_glusterfs_namespace=app-storage"
-                print "openshift_storage_glusterfs_storageclass=true"
-                print "openshift_storage_glusterfs_storageclass_default=false"
-                print "  "                
-
-                print "# CNS storage for OpenShift infrastructure"
-                print "openshift_storage_glusterfs_registry_namespace=infra-storage"
-                print "openshift_storage_glusterfs_registry_storageclass=false"
-                print "openshift_storage_glusterfs_registry_block_deploy=true"
-                print "openshift_storage_glusterfs_registry_block_host_vol_create=true"
-                print "openshift_storage_glusterfs_registry_block_host_vol_size=%d" % block_host_size
-                print "openshift_storage_glusterfs_registry_block_storageclass=true"
-                print "openshift_storage_glusterfs_registry_block_storageclass_default=false"
-                print "   "
-                
-                print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
                 print "  "
 
-                print "[glusterfs_registry]"
-                print  met_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
-                print  met_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
-                print  met_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
-                print " "
-
-        elif avail_hosts == 6:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
-                host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
-                raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
-                registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
-                replica_metrics = 1
-                metrics_pvsize = int(raw_input("What is the size for each metrics persistent volume (GB) ?: "))
-                met_hosts =  raw_input("What hosts will be used for CNS metrics backend storage  (IP/FQDN) ?:  ").split(" ") 
-                met_in_use()
-                met_devices = raw_input("What are the raw storage devices for metrics backend on these hosts (/dev/<device>) ?: ").split(" ")
-                met_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
-                
-                min_block_host_vol_size =  ( metrics_pvsize * replica_metrics) 
-                block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
-
-                print "  "        
-                print "[OSEv3:children]"
-                print "glusterfs"
-                print "glusterfs_registry"
-                print "   "
-
-                print "[OSEv3:vars]"
-
-                print "# registry"
-                print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
-                print "openshift_hosted_registry_selector=\"region=infra\"" 
-                print "   "
-        
-                print "# metrics"
-                print "openshift_metrics_install_metrics=true "
-                print "openshift_metrics_storage_kind=dynamic"
-                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize+"Gi"
-                print "openshift_metrics_cassanda_pvc_storage_class_name='glusterfs-registry-block'"
-                print "openshift_metrics_hawkular_nodeselector={\"region\":\"infra\"}"
-                print "openshift_metrics_cassandra_nodeselector={\"region\":\"infra\"}"
-                print "openshift_metrics_heapster_nodeselector={\"region\":\"infra\"}"
-                print "   "
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    "
 
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
@@ -563,68 +468,24 @@ elif choice == 3:
                 print "   "
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print " "
-
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+                print "  "
                 print "[glusterfs_registry]"
-                print  met_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
-                print  met_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
-                print  met_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
-                print " "
-
-        elif avail_hosts == 4:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
-                host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
-                raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
-                registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
-                replica_metrics = 1
-                metrics_pvsize = int(raw_input("What is the size for each metrics persistent volume (GB) ?: "))
-                        
-                print "  "        
-                print "[OSEv3:children]"
-                print "glusterfs"
-                print "   "
-
-                print "[OSEv3:vars]"
-
-                print "# registry"
-                print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
-                print "openshift_hosted_registry_selector=\"region=infra\"" 
-                print "   "
-        
-                print "# metrics"
-                print "openshift_metrics_install_metrics=true "
-                print "openshift_metrics_storage_kind=dynamic"
-                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize+"Gi"
-                print "openshift_metrics_cassanda_pvc_storage_class_name='glusterfs-storage-block'"
-                print "openshift_metrics_hawkular_nodeselector={\"region\":\"infra\"}"
-                print "openshift_metrics_cassandra_nodeselector={\"region\":\"infra\"}"
-                print "openshift_metrics_heapster_nodeselector={\"region\":\"infra\"}"
-                print "   "
-
-                print "# CNS storage cluster"
-                print "openshift_storage_glusterfs_namespace=app-storage"
-                print "openshift_storage_glusterfs_storageclass=true"
-                print "openshift_storage_glusterfs_storageclass_default=false"
-                print "openshift_storage_glusterfs_block_deploy=true"
-                print "openshift_storage_glusterfs_block_host_vol_create=true"
-                print "openshift_storage_glusterfs_block_host_vol_size=%d" % block_host_size
-                print "openshift_storage_glusterfs_block_storageclass=true"
-                print "openshift_storage_glusterfs_block_storageclass_default=false"
-                print "   "
-                          
-                
-                print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print " "
-
+                j = 0
+                for met_host in met_hosts:
+                        if j > 2:
+                               j = 0
+                        z = zone[j]                        
+                        print (met_host + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'" )
+                        j += 1
+                print "  "
 
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
@@ -634,19 +495,18 @@ elif choice == 3:
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_metrics = 1
                 metrics_pvsize = int(raw_input("What is the size for each metrics persistent volume (GB) ?: "))
-                
+                zone = [1,2,3]
                 
                 min_block_host_vol_size =  ( metrics_pvsize * replica_metrics) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
-              
 
-                print "  "        
+
+                print "  "
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "   "
 
                 print "[OSEv3:vars]"
-
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -663,6 +523,19 @@ elif choice == 3:
                 print "openshift_metrics_heapster_nodeselector={\"region\":\"infra\"}"
                 print "   "
 
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
+                print "  "
+
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    "
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
                 print "openshift_storage_glusterfs_storageclass=true"
@@ -676,9 +549,15 @@ elif choice == 3:
                           
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+
                 print " "
                                        
          
@@ -690,8 +569,7 @@ elif choice == 4:
         print (60 * '-' )
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
 
-        if avail_hosts == 7:
-                
+        if avail_hosts >= 6:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
                 host_not_valid()
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
@@ -705,7 +583,8 @@ elif choice == 4:
                 both_in_use()
                 met_log_devices = raw_input("What are the raw storage devices for logging + metrics backend on these hosts (/dev/<device>) ?: ").split(" ")
                 met_log_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
-                
+                zone = [1,2,3]
+
                 min_block_host_vol_size =  (logging_pvsize *  replica_log) + (replica_metrics * metrics_pvsize)
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
@@ -716,7 +595,6 @@ elif choice == 4:
                 print "   "
 
                 print "[OSEv3:vars]"
-
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -743,185 +621,59 @@ elif choice == 4:
                 print "openshift_metrics_cassandra_nodeselector={\"region\":\"infra\"}"
                 print "openshift_metrics_heapster_nodeselector={\"region\":\"infra\"}"
                 print "   "
-
-                print "# CNS storage cluster"
-                print "openshift_storage_glusterfs_namespace=app-storage"
-                print "openshift_storage_glusterfs_storageclass=true"
-                print "openshift_storage_glusterfs_storageclass_default=false"
-                print "  "                
-
-                print "# CNS storage for OpenShift infrastructure"
-                print "openshift_storage_glusterfs_registry_namespace=infra-storage"
-                print "openshift_storage_glusterfs_registry_storageclass=false"
-                print "openshift_storage_glusterfs_registry_block_deploy=true"
-                print "openshift_storage_glusterfs_registry_block_host_vol_create=true"
-                print "openshift_storage_glusterfs_registry_block_host_vol_size=%d" % block_host_size
-                print "openshift_storage_glusterfs_registry_block_storageclass=true"
-                print "openshift_storage_glusterfs_registry_block_storageclass_default=false"
-                print "   "
                 
-                print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
                 print "  "
 
-                print "[glusterfs_registry]"
-                print  met_log_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
-                print  met_log_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
-                print  met_log_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
-                print "   "
-
-        elif avail_hosts == 6:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
-                host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
-                raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
-                registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
-                replica_log = int(raw_input("How many replicas for logging ?: "))
-                logging_pvsize = int(raw_input("What is the size for each logging persistent volume (GB) ?: "))
-                replica_metrics = 1
-                metrics_pvsize = int(raw_input("What is the size for each metrics persistent volume (GB) ?: "))
-                met_log_hosts =  raw_input("What hosts will be used for CNS logging + metrics backend storage  (IP/FQDN) ?:  ").split(" ") 
-                both_in_use()
-                met_log_devices = raw_input("What are the raw storage devices for logging + metrics backend on these hosts (/dev/<device>) ?: ").split(" ")
-                met_log_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
-                
-
-
-                min_block_host_vol_size =  (logging_pvsize *  replica_log) + (replica_metrics * metrics_pvsize)
-                block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
-
-                print "  "        
-                print "[OSEv3:children]"
-                print "glusterfs"
-                print "glusterfs_registry"
-                print "   "
-
-                print "[OSEv3:vars]"
-
-                print "# registry"
-                print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
-                print "openshift_hosted_registry_selector=\"region=infra\"" 
-                print "   "
-
-                print "# logging"
-                print "openshift_logging_install_logging=true"
-                print "openshift_logging_es_pvc_dynamic=true "
-                print "openshift_logging_es_pvc_size=%d" % logging_pvsize+"Gi"
-                print "openshift_logging_es_cluster_size=%d" % replica_log
-                print "openshift_logging_es_pvc_storage_class_name=''glusterfs-registry-block'"
-                print "openshift_logging_kibana_nodeselector={\"region\":\"infra\"}"
-                print "openshift_logging_curator_nodeselector={\"region\":\"infra\"}"
-                print "openshift_logging_es_nodeselector={\"region\":\"infra\"}"
-                print "  " 
-        
-                print "# metrics"
-                print "openshift_metrics_install_metrics=true "
-                print "openshift_metrics_storage_kind=dynamic"
-                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize+"Gi"
-                print "openshift_metrics_cassanda_pvc_storage_class_name='glusterfs-registry-block'"
-                print "openshift_metrics_hawkular_nodeselector={\"region\":\"infra\"}"
-                print "openshift_metrics_cassandra_nodeselector={\"region\":\"infra\"}"
-                print "openshift_metrics_heapster_nodeselector={\"region\":\"infra\"}"
-                print "   "
-
-                print "# CNS storage cluster"
-                print "openshift_storage_glusterfs_namespace=app-storage"
-                print "openshift_storage_glusterfs_storageclass=true"
-                print "openshift_storage_glusterfs_storageclass_default=false"
-                print "  "                
-
-                print "# CNS storage for OpenShift infrastructure"
-                print "openshift_storage_glusterfs_registry_namespace=infra-storage"
-                print "openshift_storage_glusterfs_registry_storageclass=false"
-                print "openshift_storage_glusterfs_registry_block_deploy=true"
-                print "openshift_storage_glusterfs_registry_block_host_vol_create=true"
-                print "openshift_storage_glusterfs_registry_block_host_vol_size=%d" % block_host_size
-                print "openshift_storage_glusterfs_registry_block_storageclass=true"
-                print "openshift_storage_glusterfs_registry_block_storageclass_default=false"
-                print "   "
-                
-                print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
                 print "  "
-
-                print "[glusterfs_registry]"
-                print  met_log_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
-                print  met_log_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
-                print  met_log_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
-                print "   "
-
-        elif avail_hosts == 4:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
-                host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
-                raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
-                registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
-                replica_log = int(raw_input("How many replicas for logging ?: "))
-                logging_pvsize = int(raw_input("What is the size for each logging persistent volume (GB) ?: "))
-                replica_metrics = 1
-                metrics_pvsize = int(raw_input("What is the size for each metrics persistent volume (GB) ?: "))
-                
-                min_block_host_vol_size =  (logging_pvsize *  replica_log) + (replica_metrics * metrics_pvsize)
-                block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
-                
-                print " "        
-                print "[OSEv3:children]"
-                print "glusterfs"
-                print "   "
-
-                print "[OSEv3:vars]"
-
-                print "# registry"
-                print "openshift_hosted_registry_storage_kind=glusterfs"
-                print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
-                print "openshift_hosted_registry_selector=\"region=infra\"" 
-                print "   "
-
-                print "# logging"
-                print "openshift_logging_install_logging=true"
-                print "openshift_logging_es_pvc_dynamic=true "
-                print "openshift_logging_es_pvc_size=%d" % logging_pvsize+"Gi"
-                print "openshift_logging_es_cluster_size=%d" % replica_log
-                print "openshift_logging_es_pvc_storage_class_name='glusterfs-storage-block'"
-                print "openshift_logging_kibana_nodeselector={\"region\":\"infra\"}"
-                print "openshift_logging_curator_nodeselector={\"region\":\"infra\"}"
-                print "openshift_logging_es_nodeselector={\"region\":\"infra\"}"
-                print "  " 
-        
-                print "# metrics"
-                print "openshift_metrics_install_metrics=true "
-                print "openshift_metrics_storage_kind=dynamic"
-                print "openshift_metrics_storage_volume_size=%d" % metrics_pvsize+"Gi"
-                print "openshift_metrics_cassanda_pvc_storage_class_name='glusterfs-storage-block'"
-                print "openshift_metrics_hawkular_nodeselector={\"region\":\"infra\"}"
-                print "openshift_metrics_cassandra_nodeselector={\"region\":\"infra\"}"
-                print "openshift_metrics_heapster_nodeselector={\"region\":\"infra\"}"
-                print "   "
-
-                print "# CNS storage cluster"
-                print "openshift_storage_glusterfs_namespace=app-storage"
-                print "openshift_storage_glusterfs_storageclass=true"
-                print "openshift_storage_glusterfs_storageclass_default=false"
-                print "openshift_storage_glusterfs_block_deploy=true"
-                print "openshift_storage_glusterfs_block_host_vol_create=true"
-                print "openshift_storage_glusterfs_block_host_vol_size=%d" % block_host_size
-                print "openshift_storage_glusterfs_block_storageclass=true"
-                print "openshift_storage_glusterfs_block_storageclass_default=false"
-                print "   "
-                          
-                
-                print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
                 print "    "
+
+                print "# CNS storage cluster"
+                print "openshift_storage_glusterfs_namespace=app-storage"
+                print "openshift_storage_glusterfs_storageclass=true"
+                print "openshift_storage_glusterfs_storageclass_default=false"
+                print "  "                
+
+                print "# CNS storage for OpenShift infrastructure"
+                print "openshift_storage_glusterfs_registry_namespace=infra-storage"
+                print "openshift_storage_glusterfs_registry_storageclass=false"
+                print "openshift_storage_glusterfs_registry_block_deploy=true"
+                print "openshift_storage_glusterfs_registry_block_host_vol_create=true"
+                print "openshift_storage_glusterfs_registry_block_host_vol_size=%d" % block_host_size
+                print "openshift_storage_glusterfs_registry_block_storageclass=true"
+                print "openshift_storage_glusterfs_registry_block_storageclass_default=false"
+                print "   "
+                
+                print "[glusterfs]"
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+                print "  "
+
+                print "[glusterfs_registry]"
+                j = 0
+                for met_log_host in met_log_hosts:
+                        if j > 2:
+                               j = 0
+                        z = zone[j]                        
+                        print ( met_log_host + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'" )
+                        j += 1
+                print "   "
+
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
                 host_not_valid()
@@ -932,19 +684,16 @@ elif choice == 4:
                 logging_pvsize = int(raw_input("What is the size for each logging persistent volume (GB) ?: "))
                 replica_metrics = 1
                 metrics_pvsize = int(raw_input("What is the size for each metrics persistent volume (GB) ?: "))
-                
+                zone = [1,2,3]
                 
                 min_block_host_vol_size =  (logging_pvsize *  replica_log) + (replica_metrics * metrics_pvsize)
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
-             
-
-                print "  "        
+                print "   "             
                 print "[OSEv3:children]"
                 print "glusterfs"
-                print "   "
+                print "   " 
 
-                print "[OSEv3:vars]"
-
+		print "[OSEv3:vars]"
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -972,6 +721,21 @@ elif choice == 4:
                 print "openshift_metrics_heapster_nodeselector={\"region\":\"infra\"}"
                 print "   "
 
+                print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
+                print "  "
+
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    "
+       
+
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
                 print "openshift_storage_glusterfs_storageclass=true"
@@ -985,10 +749,16 @@ elif choice == 4:
                           
                 
                 print "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print " "
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+
+                print "   "
                 
         
 elif choice == 5: 
@@ -997,20 +767,31 @@ elif choice == 5:
         print( "With a minimum of 3 required.")  
         print (60 * '-')
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
-        if avail_hosts == 4:
+        if avail_hosts >= 4:
     
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
                 host_not_valid()
                 raw_devices = raw_input("What are the raw storage devices these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device(s) ?: "))
-                
-                print "  "
+
+                print "  "                                                
                 print "[OSEv3:children]"
                 print "glusterfs"
+                print "[OSEv3:vars]"
+		print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
                 print "  "
 
-                print "[OSEv3:vars]"
-
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    "                
+                
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
                 print "openshift_storage_glusterfs_storageclass=true"
@@ -1019,23 +800,43 @@ elif choice == 5:
                 print "   "
 
                 print "[glusterfs] "        
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[3] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+
 
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").split(" ")
                 host_not_valid() 
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
+ 
                 print "  "
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "  "
 
                 print "[OSEv3:vars]"
+		print "# Container image to use for glusterfs pods"
+                print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
+                print "openshift_storage_glusterfs_version=v%s" % ocp_version
+                print "  "
 
+                print "# Container image to use for glusterblock-provisioner pod"
+                print "openshift_storage_glusterfs_block_image=registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7"
+                print "openshift_storage_glusterfs_block_version=v%s" % ocp_version
+                print "  "
+                print "# Container image to use for heketi pods"
+                print "openshift_storage_glusterfs_heketi_image=registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7"
+                print "openshift_storage_glusterfs_heketi_version=v%s" % ocp_version           
+                print "    " 
+		
+		
                 print "# CNS storage cluster"
                 print "openshift_storage_glusterfs_namespace=app-storage"
                 print "openshift_storage_glusterfs_storageclass=true"
@@ -1044,10 +845,15 @@ elif choice == 5:
                 print "   "
 
                 print  "[glusterfs]"
-                print  app_hosts[0] + " glusterfs_zone=1" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[1] + " glusterfs_zone=2" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print  app_hosts[2] + " glusterfs_zone=3" + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-   
-       
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+
+      
 else:
         print ("Invalid number. Try again...")

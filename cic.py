@@ -300,7 +300,7 @@ elif choice == 2:
                         #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
                         print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
                         i += 1
-                print " "
+                print "   "
 
                 print "[glusterfs_registry]"
                 j = 0
@@ -476,7 +476,7 @@ elif choice == 3:
                         #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
                         print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
                         i += 1
-
+                print "  "
                 print "[glusterfs_registry]"
                 j = 0
                 for met_host in met_hosts:

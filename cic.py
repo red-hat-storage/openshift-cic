@@ -115,14 +115,14 @@ if choice == 1:
                 raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
-
+                zone = [1,2,3] 
                 
+                print "   "
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "   "
 
                 print "[OSEv3:vars]"
-
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -152,8 +152,15 @@ if choice == 1:
                 print "   "
 
                 print "[glusterfs]"
-                for app_host in app_hosts:
-                        print app_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+
 
         else :
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").split(" ")
@@ -161,14 +168,13 @@ if choice == 1:
                 raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
-
+                zone = [1,2,3]
                 print "    "
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "   "
 
                 print "[OSEv3:vars]"
-
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -194,9 +200,15 @@ if choice == 1:
                 print "openshift_storage_glusterfs_block_deploy=false"
                 print "   "
                 print "[glusterfs]"
-                for app_host in app_hosts:
-                        print app_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+             
 elif choice == 2:
         print (60 * '-')
         print ("For this configuration 7 nodes are recommended")
@@ -217,7 +229,7 @@ elif choice == 2:
                 host_in_use()
                 log_devices = raw_input("What are the raw storage devices for logging backend on these hosts (/dev/<device>) ?: ").split(" ")
                 log_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
-                
+                zone = [1,2,3]
                 
                 min_block_host_vol_size =  (logging_pvsize * replica_log) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
@@ -280,13 +292,24 @@ elif choice == 2:
                 print "   "
                 
                 print "[glusterfs]"
-                for app_host in app_hosts:
-                        print app_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
                 print " "
 
                 print "[glusterfs_registry]"
+                j = 0
                 for log_host in log_hosts:
-                        print log_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'"
+                        if j > 2:
+                                j = 0
+                        z = zone[j]
+                        print (log_host + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(log_devices) + "'")
+                        j += 1
                 print "  "
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
@@ -296,7 +319,7 @@ elif choice == 2:
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_log = int(raw_input("How many replicas for logging ?: "))
                 logging_pvsize = int(raw_input("What is the size for each logging persistent volume (GB) ?: "))
-
+                zone = [1,2,3]
                 min_block_host_vol_size =  (logging_pvsize * replica_log) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
@@ -310,7 +333,6 @@ elif choice == 2:
                 print "   "
 
                 print "[OSEv3:vars]"
-
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -356,8 +378,14 @@ elif choice == 2:
 
                           
                 print "[glusterfs]"
-                for app_host in app_hosts:
-                        print app_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
 
 
 elif choice == 3:
@@ -380,7 +408,8 @@ elif choice == 3:
                 met_in_use()
                 met_devices = raw_input("What are the raw storage devices for metrics backend on these hosts (/dev/<device>) ?: ").split(" ")
                 met_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
-                
+                zone = [1,2,3]
+
                 min_block_host_vol_size =  ( metrics_pvsize * replica_metrics) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
@@ -439,13 +468,23 @@ elif choice == 3:
                 print "   "
                 
                 print "[glusterfs]"
-                for app_host in app_hosts:
-                        print app_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
-                print "  "
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
 
                 print "[glusterfs_registry]"
+                j = 0
                 for met_host in met_hosts:
-                        print met_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'"
+                        if j > 2:
+                               j = 0
+                        z = zone[j]                        
+                        print (met_host + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(met_devices) + "'" )
+                        j += 1
                 print "  "
 
         else:
@@ -456,13 +495,13 @@ elif choice == 3:
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_metrics = 1
                 metrics_pvsize = int(raw_input("What is the size for each metrics persistent volume (GB) ?: "))
-                
+                zone = [1,2,3]
                 
                 min_block_host_vol_size =  ( metrics_pvsize * replica_metrics) 
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
 
-               
+                print "  "
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "   "
@@ -510,8 +549,15 @@ elif choice == 3:
                           
                 
                 print "[glusterfs]"
-                for app_host in app_hosts:
-                        print app_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+
                 print " "
                                        
          
@@ -537,7 +583,8 @@ elif choice == 4:
                 both_in_use()
                 met_log_devices = raw_input("What are the raw storage devices for logging + metrics backend on these hosts (/dev/<device>) ?: ").split(" ")
                 met_log_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
-                
+                zone = [1,2,3]
+
                 min_block_host_vol_size =  (logging_pvsize *  replica_log) + (replica_metrics * metrics_pvsize)
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
 
@@ -548,7 +595,6 @@ elif choice == 4:
                 print "   "
 
                 print "[OSEv3:vars]"
-
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -608,13 +654,24 @@ elif choice == 4:
                 print "   "
                 
                 print "[glusterfs]"
-                for app_host in app_hosts:
-                        print app_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
                 print "  "
 
                 print "[glusterfs_registry]"
+                j = 0
                 for met_log_host in met_log_hosts:
-                        print  met_log_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'"
+                        if j > 2:
+                               j = 0
+                        z = zone[j]                        
+                        print ( met_log_host + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(met_log_devices) + "'" )
+                        j += 1
                 print "   "
 
         else:
@@ -627,17 +684,16 @@ elif choice == 4:
                 logging_pvsize = int(raw_input("What is the size for each logging persistent volume (GB) ?: "))
                 replica_metrics = 1
                 metrics_pvsize = int(raw_input("What is the size for each metrics persistent volume (GB) ?: "))
-                
+                zone = [1,2,3]
                 
                 min_block_host_vol_size =  (logging_pvsize *  replica_log) + (replica_metrics * metrics_pvsize)
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
-             
+                print "   "             
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "   " 
 
 		print "[OSEv3:vars]"
-                print "    "
                 print "# registry"
                 print "openshift_hosted_registry_storage_kind=glusterfs"
                 print "openshift_hosted_registry_storage_volume_size=%d" % registry_pvsize+"Gi"
@@ -693,8 +749,15 @@ elif choice == 4:
                           
                 
                 print "[glusterfs]"
-                for app_host in app_hosts:
-                        print app_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
+
                 print "   "
                 
         
@@ -711,11 +774,9 @@ elif choice == 5:
                 raw_devices = raw_input("What are the raw storage devices these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device(s) ?: "))
 
-
+                print "  "                                                
                 print "[OSEv3:children]"
                 print "glusterfs"
-                print "  "
-
                 print "[OSEv3:vars]"
 		print "# Container image to use for glusterfs pods"
                 print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
@@ -739,8 +800,14 @@ elif choice == 5:
                 print "   "
 
                 print "[glusterfs] "        
-                for app_host in app_hosts:
-                        print app_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
 
 
         else:
@@ -778,8 +845,14 @@ elif choice == 5:
                 print "   "
 
                 print  "[glusterfs]"
-                for app_host in app_hosts:
-                        print app_host + " glusterfs_zone="+ str(random.randint(1,3)) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'"
+                i = 0
+                for app in app_hosts:
+                        if i > 2:
+                               i = 0
+                        z = zone[i] 
+                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
+                        print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
+                        i += 1
 
       
 else:

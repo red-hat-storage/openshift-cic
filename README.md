@@ -41,7 +41,7 @@ What is the size for the registry persistent volume (GB)?: 10
 
 How many replicas for logging ?: 3
 
-What is the size for each logging persistent volume (GB) ?: 50
+What is the size for each logging persistent volume (GB) ?: 40
 
 What is the size for each metrics persistent volume (GB) ?: 20
 
@@ -103,7 +103,7 @@ openshift_storage_glusterfs_registry_namespace=infra-storage
 openshift_storage_glusterfs_registry_storageclass=false
 openshift_storage_glusterfs_registry_block_deploy=true
 openshift_storage_glusterfs_registry_block_host_vol_create=true
-openshift_storage_glusterfs_registry_block_host_vol_size=221
+openshift_storage_glusterfs_registry_block_host_vol_size=182
 openshift_storage_glusterfs_registry_block_storageclass=true
 openshift_storage_glusterfs_registry_block_storageclass_default=false
    

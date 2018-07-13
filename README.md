@@ -30,15 +30,25 @@ For this configuration 7 nodes are recommended
 With a minimum of 3 required 
 ------------------------------------------------------------
 How many nodes are available ?:  6
+
 What hosts will be used for application storage (IP/FQDN) ?: ip-172-16-17-219.us-west-2.compute.internal ip-172-16-47-113.us-west-2.compute.internal ip-172-16-61-81.us-west-2.compute.internal
+
 What are the raw storage devices for these hosts(/dev/<device>) ?: /dev/xvdf /dev/xvdg
+
 What is the size of each raw storage device (GB) ?: 100
+
 What is the size for the registry persistent volume (GB)?: 10
+
 How many replicas for logging ?: 3
+
 What is the size for each logging persistent volume (GB) ?: 50
+
 What is the size for each metrics persistent volume (GB) ?: 20
+
 What hosts will be used for CNS logging + metrics backend storage  (IP/FQDN) ?:  ip-172-16-17-115.us-west-2.compute.internal ip-172-16-17-68.us-west-2.compute.internal ip-172-16-28-160.us-west-2.compute.internal
+
 What are the raw storage devices for logging + metrics backend on these hosts (/dev/<device>) ?: /dev/xvdf /dev/xvdg
+
 What is the size of each raw storage device (GB) ? : 100
 
 ```

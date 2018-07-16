@@ -773,7 +773,8 @@ elif choice == 5:
                 host_not_valid()
                 raw_devices = raw_input("What are the raw storage devices these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device(s) ?: "))
-
+                zone = [1,2,3]
+            
                 print "  "                                                
                 print "[OSEv3:children]"
                 print "glusterfs"
@@ -815,7 +816,8 @@ elif choice == 5:
                 host_not_valid() 
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
- 
+                zone = [1,2,3]
+
                 print "  "
                 print "[OSEv3:children]"
                 print "glusterfs"

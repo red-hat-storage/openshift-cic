@@ -124,7 +124,7 @@ if choice == 1:
                 print "# Total Storage allocated (GB) = %d" % registry_pvsize
                 print "# Total Storage available (GB) = %d" % total_avail_store 
                 if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
+                        print "\033[91mWarning one or more persistent volumes are"
                         print "larger than the raw storage device size\033[0m"
                         exit()         
  
@@ -169,7 +169,6 @@ if choice == 1:
                         if i > 2:
                                i = 0
                         z = zone[i] 
-                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
                         print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
                         i += 1
 
@@ -190,7 +189,7 @@ if choice == 1:
                 print "# Total Storage allocated (GB) = %d" % registry_pvsize
                 print "# Total Storage available (GB) = %d" % total_avail_store 
                 if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
+                        print "\033[91mWarning one or more persistent volumes are"
                         print "larger than the raw storage device size\033[0m"
                         exit()
                 print "    "
@@ -268,19 +267,20 @@ elif choice == 2:
                 block_calc = registry_pvsize + block_host_size
                 totalalloc = block_calc
 
-                print "# * "
+                
                 print "# Cluster 1"
                 print "# Total Storage allocated (GB) = 0"
                 print "# Total Storage available (GB) = %d" % total_avail_store
+                print "     "
                 print "# Cluster 2"
                 print "# Total Storage allocated (GB) = %d" % totalalloc
                 print "# Total Storage available (GB) = %d" % total_reg_store
                 if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
+                        print "\033[91mWarning one or more persistent volumes are"
                         print "larger than the raw storage device size\033[0m"
                         exit() 
                             
-                print "   " 
+                print "     " 
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "glusterfs_registry"
@@ -341,7 +341,6 @@ elif choice == 2:
                         if i > 2:
                                i = 0
                         z = zone[i] 
-                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
                         print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
                         i += 1
                 print "   "
@@ -377,10 +376,10 @@ elif choice == 2:
                 print "# Total Storage allocated (GB) = %d" % block_calc
                 print "# Total Storage available (GB) = %d" % total_avail_store 
                 if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
+                        print "\033[91mWarning one or more persistent volumes are"
                         print "larger than the raw storage device size\033[0m"
                         exit()         
-
+                
                 print "    "
                 print "[OSEv3:children]"
                 print "glusterfs"
@@ -437,7 +436,6 @@ elif choice == 2:
                         if i > 2:
                                i = 0
                         z = zone[i] 
-                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
                         print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
                         i += 1
 
@@ -477,15 +475,15 @@ elif choice == 3:
                 block_calc = registry_pvsize + block_host_size
                 totalalloc = block_calc
 
-                print "# * "
                 print "# Cluster 1"
                 print "# Total Storage allocated (GB) = 0"
                 print "# Total Storage available (GB) = %d" % total_avail_store
+                print "   "
                 print "# Cluster 2"
                 print "# Total Storage allocated (GB) = %d" % totalalloc
                 print "# Total Storage available (GB) = %d" % total_reg_store
                 if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
+                        print "\033[91mWarning one or more persistent volumes are"
                         print "larger than the raw storage device size\033[0m"
                         exit() 
 
@@ -549,7 +547,6 @@ elif choice == 3:
                         if i > 2:
                                i = 0
                         z = zone[i] 
-                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
                         print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
                         i += 1
                 print "  "
@@ -585,7 +582,7 @@ elif choice == 3:
                 print "# Total Storage allocated (GB) = %d" % block_calc
                 print "# Total Storage available (GB) = %d" % total_avail_store 
                 if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
+                        print "\033[91mWarning one or more persistent volumes are"
                         print "larger than the raw storage device size\033[0m"
                         exit()         
 
@@ -643,7 +640,6 @@ elif choice == 3:
                         if i > 2:
                                i = 0
                         z = zone[i] 
-                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
                         print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
                         i += 1
 
@@ -686,15 +682,16 @@ elif choice == 4:
                 block_calc = registry_pvsize + block_host_size
                 totalalloc = block_calc
 
-                print "# * "
+                
                 print "# Cluster 1"
                 print "# Total Storage allocated (GB) = 0"
                 print "# Total Storage available (GB) = %d" % total_avail_store
+                print "   "
                 print "# Cluster 2"
                 print "# Total Storage allocated (GB) = %d" % totalalloc
                 print "# Total Storage available (GB) = %d" % total_reg_store
                 if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
+                        print "\033[91mWarning one or more persistent volumes are"
                         print "larger than the raw storage device size\033[0m"
                         exit() 
                 print "  "        
@@ -809,7 +806,7 @@ elif choice == 4:
                 print "# Total Storage allocated (GB) = %d" % block_calc
                 print "# Total Storage available (GB) = %d" % total_avail_store 
                 if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are \n"
+                        print "\033[91mWarning one or more persistent volumes are"
                         print "larger than the raw storage device size\033[0m"
                         exit()         
 
@@ -931,7 +928,6 @@ elif choice == 5:
                         if i > 2:
                                i = 0
                         z = zone[i] 
-                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
                         print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
                         i += 1
 
@@ -977,10 +973,8 @@ elif choice == 5:
                         if i > 2:
                                i = 0
                         z = zone[i] 
-                        #print("{}  glusterfs_zone={} gluster_devices=\"{}\" " .format(app,z,raw_devices))
                         print( app + " glusterfs_zone="+ str(z) + " glusterfs_devices=" + "'" + json.dumps(raw_devices) + "'")
                         i += 1
-
-      
+    
 else:
         print ("Invalid number. Try again...")

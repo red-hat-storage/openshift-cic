@@ -77,6 +77,12 @@ def both_in_use():
             print "\033[91m %s \033[0m is not valid hostname" % hosts
             exit()
 
+def is_valid_node_count():
+    if avail_hosts < 3 :
+            print( " Less than recommended/minimum number of nodes. Try again... " )
+            exit()
+
+
 print (60 * '-')
 print ("   CNS - Inventory File Creator")
 print (60 * '-')
@@ -108,7 +114,8 @@ if choice == 1:
         print (60 * '-')
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
 
-        if avail_hosts >= 4:
+	is_valid_node_count()
+	if avail_hosts >= 4:
                 
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").split(" ")
                 host_not_valid() 
@@ -216,6 +223,7 @@ elif choice == 2:
         print (60 * '-' )
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
 
+	is_valid_node_count()
         if avail_hosts >= 6:
 
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
@@ -395,6 +403,7 @@ elif choice == 3:
         print (60 * '-' )
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
 
+        is_valid_node_count()
         if avail_hosts >= 6:
                           
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
@@ -569,6 +578,7 @@ elif choice == 4:
         print (60 * '-' )
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
 
+	is_valid_node_count()
         if avail_hosts >= 6:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
                 host_not_valid()
@@ -767,6 +777,8 @@ elif choice == 5:
         print( "With a minimum of 3 required.")  
         print (60 * '-')
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
+
+	is_valid_node_count()
         if avail_hosts >= 4:
     
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")

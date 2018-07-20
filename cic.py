@@ -896,10 +896,18 @@ elif choice == 5:
                 raw_devices = raw_input("What are the raw storage devices these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device(s) ?: "))
                 zone = [1,2,3]
-            
+
+                cluster_storage = len(raw_devices) * raw_storage_size * len(app_hosts)
+                total_avail_store = cluster_storage / 3.0
+
+                print "# Cluster 1"
+                print "# Total Storage allocated (GB) = 0" 
+                print "# Total Storage available (GB) = %d" % total_avail_store 
+  
                 print "  "                                                
                 print "[OSEv3:children]"
                 print "glusterfs"
+                print "  "
                 print "[OSEv3:vars]"
 		print "# Container image to use for glusterfs pods"
                 print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
@@ -938,6 +946,13 @@ elif choice == 5:
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 zone = [1,2,3]
+
+                cluster_storage = len(raw_devices) * raw_storage_size * len(app_hosts)
+                total_avail_store = cluster_storage / 3.0
+
+                print "# Cluster 1"
+                print "# Total Storage allocated (GB) = 0" 
+                print "# Total Storage available (GB) = %d" % total_avail_store 
 
                 print "  "
                 print "[OSEv3:children]"

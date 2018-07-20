@@ -23,11 +23,12 @@ the larger openshift-ansible inventory file for your deployment.
 4. Storage for Applications + Registry + Logging + Metrics
 5. Storage for Applications Only
 ------------------------------------------------------------
-
+```
 Enter your choice [1-5] : 4
 ------------------------------------------------------------
 For this configuration 7 nodes are recommended
 With a minimum of 3 required 
+```
 ------------------------------------------------------------
 How many nodes are available ?:  6
 
@@ -50,7 +51,7 @@ What hosts will be used for CNS logging + metrics backend storage  (IP/FQDN) ?: 
 What are the raw storage devices for logging + metrics backend on these hosts (/dev/<device>) ?: /dev/xvdf /dev/xvdg
 
 What is the size of each raw storage device (GB) ? : 100
-
+```
 # Cluster 1
 # Total Storage allocated (GB) = 0
 # Total Storage available (GB) = 200
@@ -58,7 +59,7 @@ What is the size of each raw storage device (GB) ? : 100
 # Cluster 2
 # Total Storage allocated (GB) = 192
 # Total Storage available (GB) = 200
-
+```
 ```  
 [OSEv3:children]
 glusterfs

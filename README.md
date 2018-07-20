@@ -51,7 +51,15 @@ What are the raw storage devices for logging + metrics backend on these hosts (/
 
 What is the size of each raw storage device (GB) ? : 100
 
-```
+# Cluster 1
+# Total Storage allocated (GB) = 0
+# Total Storage available (GB) = 200
+   
+# Cluster 2
+# Total Storage allocated (GB) = 192
+# Total Storage available (GB) = 200
+
+```  
 [OSEv3:children]
 glusterfs
 glusterfs_registry
@@ -65,7 +73,7 @@ openshift_hosted_registry_selector="region=infra"
 # logging
 openshift_logging_install_logging=true
 openshift_logging_es_pvc_dynamic=true 
-openshift_logging_es_pvc_size=50Gi
+openshift_logging_es_pvc_size=40Gi
 openshift_logging_es_cluster_size=3
 openshift_logging_es_pvc_storage_class_name='glusterfs-registry-block'
 openshift_logging_kibana_nodeselector={"region":"infra"}
@@ -117,4 +125,4 @@ ip-172-16-17-115.us-west-2.compute.internal glusterfs_zone=1 glusterfs_devices='
 ip-172-16-17-68.us-west-2.compute.internal glusterfs_zone=2 glusterfs_devices='["/dev/xvdf", "/dev/xvdg"]'
 ip-172-16-28-160.us-west-2.compute.internal glusterfs_zone=3 glusterfs_devices='["/dev/xvdf", "/dev/xvdg"]'
 
-```
+```   

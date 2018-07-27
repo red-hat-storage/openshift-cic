@@ -79,9 +79,7 @@ def both_in_use():
 print (60 * '-')
 print ("   CNS - Inventory File Creator")
 print (60 * '-')
-print "'\033[91m' \r\nThis tool is very highly version dependent. It is currently,"
-print "configured to work with OpenShift 3.9 and CNS 3.9."
-print "The output is NOT A COMPLETE Inventory File."
+print "'\033[91m' \r\nThe output is NOT A COMPLETE Inventory File."
 print "Created Inventory file options should be copied and pasted into" 
 print "the larger openshift-ansible inventory file for your deployment.\r\n '\033[0m'"
 print ("1. Storage for Applications + Registry ")
@@ -275,10 +273,26 @@ elif choice == 2:
                 print "# Cluster 2"
                 print "# Total Storage allocated (GB) = %d" % totalalloc
                 print "# Total Storage available (GB) = %d" % total_reg_store
-                if registry_pvsize > raw_storage_size and registry_pvsize > log_storage_size :
+                
+                if  registry_pvsize > log_storage_size and totalalloc < total_reg_store :
                         print "\033[91mWarning one or more persistent volumes are"
                         print "larger than the raw storage device size\033[0m"
+                        print "  "
+                        exit()
+                
+                elif registry_pvsize < log_storage_size and totalalloc > total_reg_store :
+                        print "\033[91mWarning your Total Storage available is less "
+                        print "than the Total Storage allocated\033[0m"
+                        exit()
+                    
+                elif registry_pvsize > log_storage_size and totalalloc > total_reg_store :
+                        print "\033[91mWarning one or more persistent volumes are"
+                        print "larger than the raw storage device size"
+                        print "  "
+                        print "Warning your Total Storage available is less "
+                        print "than the Total Storage allocated\033[0m"
                         exit() 
+
                             
                 print "     " 
                 print "[OSEv3:children]"
@@ -304,7 +318,7 @@ elif choice == 2:
                 print "openshift_logging_es_nodeselector={\"region\":\"infra\"}"
                 print "  "  
             
-         
+     
                 print "# Container image to use for glusterfs pods"
                 print "openshift_storage_glusterfs_image=registry.access.redhat.com/rhgs3/rhgs-server-rhel7"
                 print "openshift_storage_glusterfs_version=v%s" % ocp_version
@@ -482,13 +496,27 @@ elif choice == 3:
                 print "# Cluster 2"
                 print "# Total Storage allocated (GB) = %d" % totalalloc
                 print "# Total Storage available (GB) = %d" % total_reg_store
-                if registry_pvsize > raw_storage_size and registry_pvsize > met_storage_size:
-                        
+                
+                if  registry_pvsize > met_storage_size and totalalloc < total_reg_store :
                         print "\033[91mWarning one or more persistent volumes are"
                         print "larger than the raw storage device size\033[0m"
+                        print "  "
+                        exit()
+                
+                elif registry_pvsize < met_storage_size and totalalloc > total_reg_store :
+                        print "\033[91mWarning your Total Storage available is less "
+                        print "than the Total Storage allocated\033[0m"
+                        exit()
+                    
+                elif registry_pvsize > met_storage_size and totalalloc > total_reg_store :
+                        print "\033[91mWarning one or more persistent volumes are"
+                        print "larger than the raw storage device size"
+                        print "  "
+                        print "Warning your Total Storage available is less "
+                        print "than the Total Storage allocated\033[0m"
                         exit() 
-
-                      
+                
+                    
                 print "[OSEv3:children]"
                 print "glusterfs"
                 print "glusterfs_registry"
@@ -690,10 +718,26 @@ elif choice == 4:
                 print "# Cluster 2"
                 print "# Total Storage allocated (GB) = %d" % totalalloc
                 print "# Total Storage available (GB) = %d" % total_reg_store
-                if registry_pvsize > raw_storage_size and registry_pvsize > met_log_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are"
+
+                if  registry_pvsize > met_log_storage_size and totalalloc < total_reg_store :
+                        print "\033[91m Warning one or more persistent volumes are"
                         print "larger than the raw storage device size\033[0m"
+                        print "  "
+                        exit()
+                
+                elif registry_pvsize < met_log_storage_size and totalalloc > total_reg_store :
+                        print "\033[91mWarning your Total Storage available is less "
+                        print "than the Total Storage allocated\033[0m"
+                        exit()
+                    
+                elif registry_pvsize > met_log_storage_size and totalalloc > total_reg_store :
+                        print "\033[91mWarning one or more persistent volumes are"
+                        print "larger than the raw storage device size"
+                        print "  "
+                        print "Warning your Total Storage available is less "
+                        print "than the Total Storage allocated\033[0m"
                         exit() 
+
                 print "  "        
                 print "[OSEv3:children]"
                 print "glusterfs"

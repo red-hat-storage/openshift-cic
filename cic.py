@@ -8,7 +8,7 @@ ocpversion = raw_input('What version of OpenShift Container Platform are you dep
 if ocpversion == '3.9':
     execfile('cns.py')
 elif ocpversion == '3.10':
-    execfile('ocp.py')
+    execfile('ocs.py')
 else:
     print "Enter a valid supported version of OCP"
 

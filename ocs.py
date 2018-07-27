@@ -272,12 +272,12 @@ elif choice == 2:
                 
                 if  registry_pvsize > log_storage_size and totalalloc < total_reg_store :
                         print "\033[91mWarning one or more persistent volumes are"
-                        print "larger than the raw storage device size"
+                        print "larger than the raw storage device size\033[0m"
                         print "  "
                         exit()
                 
                 elif registry_pvsize < log_storage_size and totalalloc > total_reg_store :
-                        print "Warning your Total Storage available is less "
+                        print "\033[91mWarning your Total Storage available is less "
                         print "than the Total Storage allocated\033[0m"
                         exit()
                     
@@ -494,12 +494,12 @@ elif choice == 3:
                 
                 if  registry_pvsize > met_storage_size and totalalloc < total_reg_store :
                         print "\033[91mWarning one or more persistent volumes are"
-                        print "larger than the raw storage device size"
+                        print "larger than the raw storage device size\033[0m"
                         print "  "
                         exit()
                 
                 elif registry_pvsize < met_storage_size and totalalloc > total_reg_store :
-                        print "Warning your Total Storage available is less "
+                        print "\033[91mWarning your Total Storage available is less "
                         print "than the Total Storage allocated\033[0m"
                         exit()
                     
@@ -712,12 +712,12 @@ elif choice == 4:
 
                 if  registry_pvsize > met_log_storage_size and totalalloc < total_reg_store :
                         print "\033[91mWarning one or more persistent volumes are"
-                        print "larger than the raw storage device size"
+                        print "larger than the raw storage device size\033[0m"
                         print "  "
                         exit()
                 
                 elif registry_pvsize < met_log_storage_size and totalalloc > total_reg_store :
-                        print "Warning your Total Storage available is less "
+                        print "\033[91mWarning your Total Storage available is less "
                         print "than the Total Storage allocated\033[0m"
                         exit()
                     

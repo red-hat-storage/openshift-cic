@@ -43,6 +43,12 @@ def host_not_valid():
             print "\033[91m %s \033[0m is not valid hostname" % ahosts
             exit()
 
+def min_hosts():
+        if len(app_hosts) < 3:
+                print "\033[91m Require a minimum of 3 hosts \033[0m"
+                exit() 
+
+
 def host_in_use():
     for lhosts in log_hosts:
         if is_valid_hostname(lhosts) == True and lhosts not in app_hosts:
@@ -108,6 +114,7 @@ if choice == 1:
         if avail_hosts >= 4:
                 
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").split(" ")
+                min_hosts()
                 host_not_valid() 
                 raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
@@ -173,6 +180,7 @@ if choice == 1:
 
         else :
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").split(" ")
+                min_hosts()
                 host_not_valid() 
                 raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
@@ -240,6 +248,7 @@ elif choice == 2:
         if avail_hosts >= 6:
 
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                min_hosts()
                 host_not_valid()
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
@@ -370,6 +379,7 @@ elif choice == 2:
                 print "  "
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                min_hosts()
                 host_not_valid()
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
@@ -464,6 +474,7 @@ elif choice == 3:
         if avail_hosts >= 6:
                           
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                min_hosts()
                 host_not_valid()
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
@@ -591,6 +602,7 @@ elif choice == 3:
 
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                min_hosts()
                 host_not_valid()
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
@@ -684,6 +696,7 @@ elif choice == 4:
 
         if avail_hosts >= 6:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                min_hosts()
                 host_not_valid()
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
@@ -826,6 +839,7 @@ elif choice == 4:
 
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                min_hosts()
                 host_not_valid()
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
@@ -938,6 +952,7 @@ elif choice == 5:
         if avail_hosts >= 4:
     
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                min_hosts()
                 host_not_valid()
                 raw_devices = raw_input("What are the raw storage devices these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device(s) ?: "))
@@ -988,6 +1003,7 @@ elif choice == 5:
 
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").split(" ")
+                min_hosts()
                 host_not_valid() 
                 raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))

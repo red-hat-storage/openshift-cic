@@ -399,10 +399,27 @@ elif choice == 2:
                 print "# Cluster 1"
                 print "# Total Storage allocated (GB) = %d" % block_calc
                 print "# Total Storage available (GB) = %d" % total_avail_store 
-                if block_calc > total_avail_store :
+
+                if block_calc > total_avail_store and registry_pvsize < total_avail_store:
                         print "\033[91mWarning Your Total Storage available is less "
                         print " than the Total Storage allocated\033[0m"
-                        exit()                
+                        exit()
+
+                elif block_calc < total_avail_store and registry_pvsize > total_avail_store:
+                        print "\033[91m Warning one or more persistent volumes are"
+                        print "larger than the raw storage device size\033[0m"
+                        print "  "
+                        exit()
+                                
+                elif block_calc > total_avail_store and registry_pvsize > total_avail_store:
+                        print "\033[91mWarning one or more persistent volumes are"
+                        print "larger than the raw storage device size"
+                        print "  "
+                        print "Warning your Total Storage available is less "
+                        print "than the Total Storage allocated\033[0m"
+                        exit() 
+
+
 
                 print "    "
                 print "[OSEv3:children]"
@@ -622,10 +639,28 @@ elif choice == 3:
                 print "# Cluster 1"
                 print "# Total Storage allocated (GB) = %d" % block_calc
                 print "# Total Storage available (GB) = %d" % total_avail_store 
-                if block_calc > total_avail_store :
+
+                if block_calc > total_avail_store and registry_pvsize < total_avail_store:
                         print "\033[91mWarning Your Total Storage available is less "
                         print " than the Total Storage allocated\033[0m"
                         exit()
+
+                elif block_calc < total_avail_store and registry_pvsize > total_avail_store:
+                        print "\033[91m Warning one or more persistent volumes are"
+                        print "larger than the raw storage device size\033[0m"
+                        print "  "
+                        exit()
+                                
+                elif block_calc > total_avail_store and registry_pvsize > total_avail_store:
+                        print "\033[91mWarning one or more persistent volumes are"
+                        print "larger than the raw storage device size"
+                        print "  "
+                        print "Warning your Total Storage available is less "
+                        print "than the Total Storage allocated\033[0m"
+                        exit() 
+
+
+
 
                 print "  "
                 print "[OSEv3:children]"
@@ -864,11 +899,24 @@ elif choice == 4:
                 print "# Total Storage allocated (GB) = %d" % block_calc
                 print "# Total Storage available (GB) = %d" % total_avail_store 
 
-                if block_calc > total_avail_store :
+                if block_calc > total_avail_store and registry_pvsize < total_avail_store:
                         print "\033[91mWarning Your Total Storage available is less "
                         print " than the Total Storage allocated\033[0m"
                         exit()
-                                                 
+
+                elif block_calc < total_avail_store and registry_pvsize > total_avail_store:
+                        print "\033[91m Warning one or more persistent volumes are"
+                        print "larger than the raw storage device size\033[0m"
+                        print "  "
+                        exit()
+                                
+                elif block_calc > total_avail_store and registry_pvsize > total_avail_store:
+                        print "\033[91mWarning one or more persistent volumes are"
+                        print "larger than the raw storage device size"
+                        print "  "
+                        print "Warning your Total Storage available is less "
+                        print "than the Total Storage allocated\033[0m"
+                        exit() 
 
                 print "   "             
                 print "[OSEv3:children]"

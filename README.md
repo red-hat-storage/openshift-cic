@@ -2,10 +2,10 @@
 
 # CNS Inventory file Creator (CIC)
 
-Script which the user runs and then answers a list of questions to create set of inventory_file options to be incorporated into their larger inventory_file for running openshift-ansible playbooks. The goal is to reduce the complexity and error prone nature of needing to know the correct inventory_file options for a particular OCP version. CIC will generate inventory file options for OCP 3.9 an OCP 3.10.
+Script which the user runs and then answers a list of questions to create set of inventory_file options to be incorporated into their larger inventory_file for running openshift-ansible playbooks. The goal is to reduce the complexity and error prone nature of needing to know the correct inventory_file options for a particular OCP version. CIC will generate inventory file options for OCP 3.9 and OCP 3.10.
 
 Embedded in the answers will be calculations or ‘pre-flight checks’. An example is the minimum size for the block_host_vol_size (GB). The minimum size is equal to all of the blockvolume PVs added up for metrics and logging + 30% overhead which is a good practice for file system overhead. Also, there is a calculation done for the Total available storage compared to the Total allocated storage as well as a check to make sure the size of any Persistent Volume (PV) does not exceed the size of the raw storage devices. Both of these conditions, if violated, will print out a Warning message and the user will need to try again.
-
+```
 $ ./cic.py
 What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: 3.9
 ------------------------------------------------------------

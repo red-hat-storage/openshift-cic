@@ -400,7 +400,7 @@ elif choice == 2:
 
                 if block_calc > total_avail_store and registry_pvsize < total_avail_store:
                         print "\033[91mWarning Your Total Storage available is less "
-                        print " than the Total Storage allocated\033[0m"
+                        print "than the Total Storage allocated\033[0m"
                         exit()
 
                 elif block_calc < total_avail_store and registry_pvsize > total_avail_store:
@@ -639,7 +639,7 @@ elif choice == 3:
 
                 if block_calc > total_avail_store and registry_pvsize < total_avail_store:
                         print "\033[91mWarning Your Total Storage available is less "
-                        print " than the Total Storage allocated\033[0m"
+                        print "than the Total Storage allocated\033[0m"
                         exit()
 
                 elif block_calc < total_avail_store and registry_pvsize > total_avail_store:
@@ -897,7 +897,7 @@ elif choice == 4:
 
                 if block_calc > total_avail_store and registry_pvsize < total_avail_store:
                         print "\033[91mWarning Your Total Storage available is less "
-                        print " than the Total Storage allocated\033[0m"
+                        print "than the Total Storage allocated\033[0m"
                         exit()
 
                 elif block_calc < total_avail_store and registry_pvsize > total_avail_store:

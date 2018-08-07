@@ -113,10 +113,10 @@ if choice == 1:
 
         if avail_hosts >= 4:
                 
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").strip().split(" ")
                 min_hosts()
                 host_not_valid() 
-                raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ").split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ").strip().split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 zone = [1,2,3]
@@ -176,10 +176,10 @@ if choice == 1:
 
 
         else :
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").strip().split(" ")
                 min_hosts()
                 host_not_valid() 
-                raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ").split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ").strip().split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 zone = [1,2,3]
@@ -243,17 +243,17 @@ elif choice == 2:
 
         if avail_hosts >= 6:
 
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").strip().split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_log = int(raw_input("How many replicas for logging ?: "))
                 logging_pvsize = int(raw_input("What is the size for each logging persistent volume (GB) ?: "))
-                log_hosts =  raw_input("What hosts will be used for CNS logging backend storage  (IP/FQDN) ?:  ").split(" ") 
+                log_hosts =  raw_input("What hosts will be used for CNS logging backend storage  (IP/FQDN) ?:  ").strip().split(" ") 
                 host_in_use()
-                log_devices = raw_input("What are the raw storage devices for logging backend on these hosts (/dev/<device>) ?: ").split(" ")
+                log_devices = raw_input("What are the raw storage devices for logging backend on these hosts (/dev/<device>) ?: ").strip().split(" ")
                 log_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
                 zone = [1,2,3]
                 
@@ -376,10 +376,10 @@ elif choice == 2:
                         j += 1
                 print "  "
         else:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").strip().split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_log = int(raw_input("How many replicas for logging ?: "))
@@ -485,17 +485,17 @@ elif choice == 3:
 
         if avail_hosts >= 6:
                           
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").strip().split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_metrics = 1
                 metrics_pvsize = int(raw_input("What is the size for each metrics persistent volume (GB) ?: "))
-                met_hosts =  raw_input("What hosts will be used for CNS metrics backend storage  (IP/FQDN) ?:  ").split(" ") 
+                met_hosts =  raw_input("What hosts will be used for CNS metrics backend storage  (IP/FQDN) ?:  ").strip().split(" ") 
                 met_in_use()
-                met_devices = raw_input("What are the raw storage devices for metrics backend on these hosts (/dev/<device>) ?: ").split(" ")
+                met_devices = raw_input("What are the raw storage devices for metrics backend on these hosts (/dev/<device>) ?: ").strip().split(" ")
                 met_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
                 zone = [1,2,3]
 
@@ -615,10 +615,10 @@ elif choice == 3:
                 print "  "
 
         else:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").strip().split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_metrics = 1
@@ -724,19 +724,19 @@ elif choice == 4:
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
 
         if avail_hosts >= 6:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").strip().split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_log = int(raw_input("How many replicas for logging ?: "))
                 logging_pvsize = int(raw_input("What is the size for each logging persistent volume (GB) ?: "))
                 replica_metrics = 1
                 metrics_pvsize = int(raw_input("What is the size for each metrics persistent volume (GB) ?: "))
-                met_log_hosts =  raw_input("What hosts will be used for CNS logging + metrics backend storage  (IP/FQDN) ?:  ").split(" ") 
+                met_log_hosts =  raw_input("What hosts will be used for CNS logging + metrics backend storage  (IP/FQDN) ?:  ").strip().split(" ") 
                 both_in_use()
-                met_log_devices = raw_input("What are the raw storage devices for logging + metrics backend on these hosts (/dev/<device>) ?: ").split(" ")
+                met_log_devices = raw_input("What are the raw storage devices for logging + metrics backend on these hosts (/dev/<device>) ?: ").strip().split(" ")
                 met_log_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
                 zone = [1,2,3]
 
@@ -869,10 +869,10 @@ elif choice == 4:
                 print "   "
 
         else:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").strip().split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_log = int(raw_input("How many replicas for logging ?: "))
@@ -992,10 +992,10 @@ elif choice == 5:
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
         if avail_hosts >= 4:
     
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices these hosts(/dev/<device>) ?: ").split(" ")
+                raw_devices = raw_input("What are the raw storage devices these hosts(/dev/<device>) ?: ").strip().split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device(s) ?: "))
                 zone = [1,2,3]
 
@@ -1040,10 +1040,10 @@ elif choice == 5:
 
 
         else:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").strip().split(" ")
                 min_hosts()
                 host_not_valid() 
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").strip().split(" ")
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 zone = [1,2,3]
 

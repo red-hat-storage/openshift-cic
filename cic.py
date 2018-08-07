@@ -3,7 +3,7 @@ import os
 import shlex
 import subprocess
 
-ocpversion = raw_input('What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: ')
+ocpversion = raw_input('What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: ').strip()
 
 if ocpversion == '3.9':
     execfile('cns.py')

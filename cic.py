@@ -23,7 +23,11 @@ from argparse import RawTextHelpFormatter
 import pprint
 import re
 import json
+import os
 from jinja2 import Environment, FileSystemLoader
+
+
+
 
 def is_valid_hostname(hostname):
     if len(hostname) > 255:
@@ -41,6 +45,7 @@ def host_not_valid():
             print "\033[91m %s \033[0m is not valid hostname" % ahosts
             exit()
 
+            
 def min_hosts():
         if len(app_hosts) < 3:
                 print "\033[91m Require a minimum of 3 hosts \033[0m"
@@ -80,13 +85,30 @@ def both_in_use():
             print "\033[91m %s \033[0m is not valid hostname" % hosts
             exit()
 
+def get_template_path():
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        template_path = os.path.join(script_dir, 'templates')
+        return template_path 
+
+def get_version(prompt):
+    while True:
+        ver = raw_input(prompt).strip()
+        if ver not in ('3.9', '3.10'):
+                print "The support versions are 3.9 and 3.10 only "
+                exit()
+        return ver
+
+ver = get_version('What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: ')
+print "%s" % ver
+
+
 print (60 * '-')
 print ("\033[91m   CIC - Inventory File Creator for CNS3.9 & OCS3.10 \033[0m")
 print (60 * '-')
 
 
-ver = raw_input('What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: ').strip()
-print (' ')
+#ver = raw_input('What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: ').strip()
+#print (' ')
 
 print (60 * '-')
 print "\033[91m \r\nThe output is NOT A COMPLETE Inventory File."
@@ -138,64 +160,17 @@ if choice == 1:
                         print "larger than the raw storage device size\033[0m"
                         exit()         
  
+              
+	        if ver in ['3.9', '3.10']:
+                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'appreg.j2')
                 
-		file_loader = FileSystemLoader('.')
-		# Load the enviroment
+                file_loader = FileSystemLoader(os.path.dirname(template_file))
 		env = Environment(loader=file_loader)
-		
-		#load the appropriate 
-                if ver == '3.9':
-                        template = env.get_template('./templates/39/appreg.j2')
-                elif ver == '3.10':
-                        template = env.get_template('./templates/310/appreg.j2')
-
+		template = env.get_template(os.path.basename(template_file))
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size,registry_pvsize=registry_pvsize)
 		#Print the output
 		print(output)
 
-
-		with open("appreg.txt", "wb") as fh:
-    			fh.write(output)		
-				
-
-        else :
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").strip().split(" ")
-                min_hosts()
-                host_not_valid() 
-                raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ").strip().split(" ")
-                raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
-                registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
-
-
-                # Single cluster total storage calculation
-                cluster_storage = len(raw_devices) * raw_storage_size * len(app_hosts)
-                total_avail_store = cluster_storage / 3.0
-      
-                print "# Cluster 1"
-                print "# Total Storage allocated (GB) = %d" % registry_pvsize
-                print "# Total Storage available (GB) = %d" % total_avail_store 
-                if registry_pvsize > raw_storage_size:
-                        print "\033[91mWarning one or more persistent volumes are"
-                        print "larger than the raw storage device size\033[0m"
-                        exit()
-		file_loader = FileSystemLoader('.')
-		# Load the enviroment
-		env = Environment(loader=file_loader)
-		
-		#load the appropriate template
-		#template = env.get_template('./templates/39/appreg.j2')
-                if ver == '3.9':
-                        template = env.get_template('./templates/39/app.j2')
-                elif ver == '3.10':
-                        template = env.get_template('./templates/310/app.j2')
-  
-		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size,registry_pvsize=registry_pvsize)
-		#Print the output
-		print(output)
-
-		with open("appreg.txt", "wb") as fh:
-    			fh.write(output)		
-				
              
 elif choice == 2:
         print (60 * '-')
@@ -261,28 +236,15 @@ elif choice == 2:
                         print "than the Total Storage allocated\033[0m"
                         exit() 
 
-		file_loader = FileSystemLoader('.')
-		# Load the enviroment
+	        if ver in ['3.9', '3.10']:
+                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'applog-multi.j2')
+                
+                file_loader = FileSystemLoader(os.path.dirname(template_file))
 		env = Environment(loader=file_loader)
-		
-		#load the appropriate template
-		#template = env.get_template('./templates/39/applog-multi.j2')
-                if ver == '3.9':
-                        template = env.get_template('./templates/39/applog-multi.j2')
-                elif ver == '3.10':
-                        template = env.get_template('./templates/310/applog-multi.j2')
-  
+		template = env.get_template(os.path.basename(template_file))
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,logging_pvsize=logging_pvsize,replica_log=replica_log,log_hosts=log_hosts,log_devices=log_devices, log_storage_size=log_storage_size )
 		#Print the output
 		print(output)
-
-
-		with open("applog-multi.txt", "wb") as fh:
-    			fh.write(output)		
-				
-
-
-                            
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
                 min_hosts()
@@ -325,26 +287,16 @@ elif choice == 2:
                         print "than the Total Storage allocated\033[0m"
                         exit() 
 
-
-
-		file_loader = FileSystemLoader('.')
-		# Load the enviroment
+	        if ver in ['3.9', '3.10']:
+                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'applog.j2')
+                
+                file_loader = FileSystemLoader(os.path.dirname(template_file))
 		env = Environment(loader=file_loader)
-		
-		#load the appropriate template
-		#template = env.get_template('./templates/39/applog.j2')
-                if ver == '3.9':
-                        template = env.get_template('./templates/39/applog.j2')
-                elif ver == '3.10':
-                        template = env.get_template('./templates/310/applog.j2')
+		template = env.get_template(os.path.basename(template_file))
   
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,logging_pvsize=logging_pvsize,replica_log=replica_log)
 		#Print the output
 		print(output)
-
-
-		with open("applog.txt", "wb") as fh:
-    			fh.write(output)		
 
 elif choice == 3:
         print (60 * '-')
@@ -408,25 +360,18 @@ elif choice == 3:
                         print "Warning your Total Storage available is less "
                         print "than the Total Storage allocated\033[0m"
                         exit() 
- 
- 		file_loader = FileSystemLoader('.')
-		# Load the enviroment
+
+	        if ver in ['3.9', '3.10']:
+                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'appmet-multi.j2')
+                
+                file_loader = FileSystemLoader(os.path.dirname(template_file))
 		env = Environment(loader=file_loader)
-		
-		#load the appropriate template
-		#template = env.get_template('./templates/39/appmet-multi.j2')
-
-                if ver == '3.9':
-                        template = env.get_template('./templates/39/appmet-multi.j2')
-                elif ver == '3.10':
-                        template = env.get_template('./templates/310/appmet-multi.j2')
-  
-
+		template = env.get_template(os.path.basename(template_file)) 
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,metrics_pvsize=metrics_pvsize,met_hosts=met_hosts,met_devices=met_devices, met_storage_size=met_storage_size )
 		#Print the output
 		print(output)
-		with open("appmet-multi.txt", "wb") as fh:
-    			fh.write(output)		
+#		with open("appmet-multi.txt", "wb") as fh:
+#    			fh.write(output)		
                
                   
 
@@ -472,27 +417,15 @@ elif choice == 3:
                         print "than the Total Storage allocated\033[0m"
                         exit() 
 
-		file_loader = FileSystemLoader('.')
-		# Load the enviroment
+	        if ver in ['3.9', '3.10']:
+                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'appmet.j2')
+                
+                file_loader = FileSystemLoader(os.path.dirname(template_file))
 		env = Environment(loader=file_loader)
-		
-		#load the appropriate template
-		#template = env.get_template('./templates/39/appmet.j2')
-                if ver == '3.9':
-                        template = env.get_template('./templates/39/appmet.j2')
-                elif ver == '3.10':
-                        template = env.get_template('./templates/310/appmet.j2')
-  
+		template = env.get_template(os.path.basename(template_file))
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize, metrics_pvsize = metrics_pvsize)
 		#Print the output
 		print(output)
-
-
-		with open("appmet.txt", "wb") as fh:
-    			fh.write(output)		
-				
-                             
-         
 
 elif choice == 4:
         print (60 * '-')
@@ -558,30 +491,15 @@ elif choice == 4:
                         print "than the Total Storage allocated\033[0m"
                         exit() 
 
-                		
-		file_loader = FileSystemLoader('.')
-		# Load the enviroment
+	        if ver in ['3.9', '3.10']:
+                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'applogmet-multi.j2')
+                
+                file_loader = FileSystemLoader(os.path.dirname(template_file))
 		env = Environment(loader=file_loader)
-		
-		#load the appropriate template
-		#template = env.get_template('./templates/39/applogmet-multi.j2')
-                if ver == '3.9':
-                        template = env.get_template('./templates/39/applogmet-multi.j2')
-                elif ver == '3.10':
-                        template = env.get_template('./templates/310/applogmet-multi.j2')
-  
+		template = env.get_template(os.path.basename(template_file))
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,logging_pvsize=logging_pvsize,replica_log=replica_log, met_log_hosts=met_log_hosts, met_log_devices=met_log_devices)
 		#Print the output
 		print(output)
-
-
-		with open("applogmet-multi.txt", "wb") as fh:
-    			fh.write(output)		
-				
- 
-                
-                       
-
         else:
                 app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
                 min_hosts()
@@ -629,26 +547,16 @@ elif choice == 4:
                         exit() 
 
 		
-		file_loader = FileSystemLoader('.')
-		# Load the enviroment
+	        if ver in ['3.9', '3.10']:
+                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'applogmet.j2')
+                
+                file_loader = FileSystemLoader(os.path.dirname(template_file))
 		env = Environment(loader=file_loader)
-		
-		#load the appropriate template
-		#template = env.get_template('./templates/39/applogmet.j2')
-                if ver == '3.9':
-                        template = env.get_template('./templates/39/applogmet.j2')
-                elif ver == '3.10':
-                        template = env.get_template('./templates/310/applogmet.j2')
-  
+		template = env.get_template(os.path.basename(template_file))
 
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,logging_pvsize=logging_pvsize,replica_log=replica_log)
 		#Print the output
 		print(output)
-
-		with open("applogmet.txt", "wb") as fh:
-    			fh.write(output)		
-				
-		                
         
 elif choice == 5: 
         print (60 * '-')
@@ -672,26 +580,23 @@ elif choice == 5:
                 print "# Total Storage allocated (GB) = 0" 
                 print "# Total Storage available (GB) = %d" % total_avail_store 
                 
-                file_loader = FileSystemLoader('.')
-		# Load the enviroment
+	        if ver in ['3.9', '3.10']:
+                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'app.j2')
+                
+                file_loader = FileSystemLoader(os.path.dirname(template_file))
 		env = Environment(loader=file_loader)
-		
-		#load the appropriate template
-		#template = env.get_template('./templates/310/app.j2')
-                if ver == '3.9':
-                        template = env.get_template('./templates/39/app.j2')
-                elif ver == '3.10':
-                        template = env.get_template('./templates/310/app.j2')
-                        
+		template = env.get_template(os.path.basename(template_file))
+
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size)
 		#Print the output
 		print(output)
-
-
-		with open("app.txt", "wb") as fh:
-    			fh.write(output)
-               
-          
     
 else:
         print ("Invalid number. Try again...")
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-o", "--output", help="Directs the OCP Storage configuration to a file",metavar='PATH',default=None, )
+args = parser.parse_args()
+                
+with open(args.output, 'w') as output_file:
+        output_file.write("%s\n" % output)

@@ -27,7 +27,10 @@ import os
 from jinja2 import Environment, FileSystemLoader
 
 
-
+def check_input(no_of_hosts):
+    hosts_found = re.split(r'[,\s?]', no_of_hosts)
+    hosts = [host for host in hosts_found if host]
+    return hosts
 
 def is_valid_hostname(hostname):
     if len(hostname) > 255:
@@ -90,6 +93,14 @@ def get_template_path():
         template_path = os.path.join(script_dir, 'templates')
         return template_path 
 
+def get_template_input(ver, jinjafile):
+        if ver in ['3.9', '3.10']:
+                template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), jinjafile )
+               
+        file_loader = FileSystemLoader(os.path.dirname(template_file))
+	env = Environment(loader=file_loader)
+	return env.get_template(os.path.basename(template_file))
+  
 def get_version(prompt):
     while True:
         ver = raw_input(prompt).strip()
@@ -98,17 +109,13 @@ def get_version(prompt):
                 exit()
         return ver
 
-ver = get_version('What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: ')
-print "%s" % ver
-
-
 print (60 * '-')
 print ("\033[91m   CIC - Inventory File Creator for CNS3.9 & OCS3.10 \033[0m")
 print (60 * '-')
 
+ver = get_version('What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: ')
+#print "%s" % ver
 
-#ver = raw_input('What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: ').strip()
-#print (' ')
 
 print (60 * '-')
 print "\033[91m \r\nThe output is NOT A COMPLETE Inventory File."
@@ -140,10 +147,12 @@ if choice == 1:
 
         if avail_hosts >= 3:
                 
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ").strip().split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?:  ")
+                app_hosts =  check_input(app_hosts)
                 min_hosts()
                 host_not_valid() 
-                raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ").strip().split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts (/dev/<device>) ?: ")
+                raw_devices = check_input(raw_devices)
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
 
@@ -160,17 +169,9 @@ if choice == 1:
                         print "larger than the raw storage device size\033[0m"
                         exit()         
  
-              
-	        if ver in ['3.9', '3.10']:
-                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'appreg.j2')
-                
-                file_loader = FileSystemLoader(os.path.dirname(template_file))
-		env = Environment(loader=file_loader)
-		template = env.get_template(os.path.basename(template_file))
+                template = get_template_input(ver, 'appreg.j2')
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size,registry_pvsize=registry_pvsize)
-		#Print the output
 		print(output)
-
              
 elif choice == 2:
         print (60 * '-')
@@ -181,17 +182,21 @@ elif choice == 2:
 
         if avail_hosts >= 6:
 
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ")
+                app_hosts =  check_input(app_hosts)
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").strip().split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ")
+                raw_devices = check_input(raw_devices)
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_log = int(raw_input("How many replicas for logging ?: "))
                 logging_pvsize = int(raw_input("What is the size for each logging persistent volume (GB) ?: "))
-                log_hosts =  raw_input("What hosts will be used for CNS logging backend storage  (IP/FQDN) ?:  ").strip().split(" ") 
+                log_hosts =  raw_input("What hosts will be used for CNS logging backend storage  (IP/FQDN) ?:  ")
+                log_hosts = check_input(log_hosts)
                 host_in_use()
-                log_devices = raw_input("What are the raw storage devices for logging backend on these hosts (/dev/<device>) ?: ").strip().split(" ")
+                log_devices = raw_input("What are the raw storage devices for logging backend on these hosts (/dev/<device>) ?: ")
+                log_devices = check_input(log_devices)
                 log_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
                 zone = [1,2,3]
                 
@@ -236,20 +241,16 @@ elif choice == 2:
                         print "than the Total Storage allocated\033[0m"
                         exit() 
 
-	        if ver in ['3.9', '3.10']:
-                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'applog-multi.j2')
-                
-                file_loader = FileSystemLoader(os.path.dirname(template_file))
-		env = Environment(loader=file_loader)
-		template = env.get_template(os.path.basename(template_file))
+                template = get_template_input(ver, 'applog-multi.j2')
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,logging_pvsize=logging_pvsize,replica_log=replica_log,log_hosts=log_hosts,log_devices=log_devices, log_storage_size=log_storage_size )
-		#Print the output
 		print(output)
         else:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ")
+                app_hosts = check_input(app_hosts)
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").strip().split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ")
+                raw_devices = check_input(raw_devices)
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_log = int(raw_input("How many replicas for logging ?: "))
@@ -287,15 +288,8 @@ elif choice == 2:
                         print "than the Total Storage allocated\033[0m"
                         exit() 
 
-	        if ver in ['3.9', '3.10']:
-                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'applog.j2')
-                
-                file_loader = FileSystemLoader(os.path.dirname(template_file))
-		env = Environment(loader=file_loader)
-		template = env.get_template(os.path.basename(template_file))
-  
+                template = get_template_input(ver, 'applog.j2')
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,logging_pvsize=logging_pvsize,replica_log=replica_log)
-		#Print the output
 		print(output)
 
 elif choice == 3:
@@ -307,17 +301,21 @@ elif choice == 3:
 
         if avail_hosts >= 6:
                           
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ")
+                app_hosts = check_input(app_hosts)
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").strip().split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ")
+                raw_devices = check_input(raw_devices)
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_metrics = 1
                 metrics_pvsize = int(raw_input("What is the size for each metrics persistent volume (GB) ?: "))
-                met_hosts =  raw_input("What hosts will be used for CNS metrics backend storage  (IP/FQDN) ?:  ").strip().split(" ") 
+                met_hosts =  raw_input("What hosts will be used for CNS metrics backend storage  (IP/FQDN) ?:  ")
+                met_hosts = check_input(met_hosts)
                 met_in_use()
-                met_devices = raw_input("What are the raw storage devices for metrics backend on these hosts (/dev/<device>) ?: ").strip().split(" ")
+                met_devices = raw_input("What are the raw storage devices for metrics backend on these hosts (/dev/<device>) ?: ")
+                met_devices = check_input(met_devices)
                 met_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
                 zone = [1,2,3]
 
@@ -361,25 +359,17 @@ elif choice == 3:
                         print "than the Total Storage allocated\033[0m"
                         exit() 
 
-	        if ver in ['3.9', '3.10']:
-                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'appmet-multi.j2')
-                
-                file_loader = FileSystemLoader(os.path.dirname(template_file))
-		env = Environment(loader=file_loader)
-		template = env.get_template(os.path.basename(template_file)) 
+                template = get_template_input(ver, 'appmet-multi.j2') 
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,metrics_pvsize=metrics_pvsize,met_hosts=met_hosts,met_devices=met_devices, met_storage_size=met_storage_size )
-		#Print the output
 		print(output)
-#		with open("appmet-multi.txt", "wb") as fh:
-#    			fh.write(output)		
-               
-                  
-
+              
         else:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ")
+                app_hosts = check_input(app_hosts)
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").strip().split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ")
+                raw_devices = check_input(raw_devices)
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_metrics = 1
@@ -417,14 +407,8 @@ elif choice == 3:
                         print "than the Total Storage allocated\033[0m"
                         exit() 
 
-	        if ver in ['3.9', '3.10']:
-                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'appmet.j2')
-                
-                file_loader = FileSystemLoader(os.path.dirname(template_file))
-		env = Environment(loader=file_loader)
-		template = env.get_template(os.path.basename(template_file))
+                template = get_template_input(ver, 'appmet.j2')
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize, metrics_pvsize = metrics_pvsize)
-		#Print the output
 		print(output)
 
 elif choice == 4:
@@ -435,19 +419,23 @@ elif choice == 4:
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
 
         if avail_hosts >= 6:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ")
+                app_hosts = check_input(app_hosts)
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").strip().split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ")
+                raw_devices = check_input(raw_devices)
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_log = int(raw_input("How many replicas for logging ?: "))
                 logging_pvsize = int(raw_input("What is the size for each logging persistent volume (GB) ?: "))
                 replica_metrics = 1
                 metrics_pvsize = int(raw_input("What is the size for each metrics persistent volume (GB) ?: "))
-                met_log_hosts =  raw_input("What hosts will be used for CNS logging + metrics backend storage  (IP/FQDN) ?:  ").strip().split(" ") 
+                met_log_hosts =  raw_input("What hosts will be used for CNS logging + metrics backend storage  (IP/FQDN) ?:  ")
+                met_log_hosts = check_input(met_log_hosts)
                 both_in_use()
-                met_log_devices = raw_input("What are the raw storage devices for logging + metrics backend on these hosts (/dev/<device>) ?: ").strip().split(" ")
+                met_log_devices = raw_input("What are the raw storage devices for logging + metrics backend on these hosts (/dev/<device>) ?: ")
+                met_log_devices = check_input(met_log_devices)
                 met_log_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
                 zone = [1,2,3]
 
@@ -491,20 +479,16 @@ elif choice == 4:
                         print "than the Total Storage allocated\033[0m"
                         exit() 
 
-	        if ver in ['3.9', '3.10']:
-                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'applogmet-multi.j2')
-                
-                file_loader = FileSystemLoader(os.path.dirname(template_file))
-		env = Environment(loader=file_loader)
-		template = env.get_template(os.path.basename(template_file))
+                template = get_template_input(ver, 'applogmet-multi.j2')
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,logging_pvsize=logging_pvsize,replica_log=replica_log, met_log_hosts=met_log_hosts, met_log_devices=met_log_devices)
-		#Print the output
 		print(output)
         else:
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ")
+                app_hosts = check_input(app_hosts)           
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ").strip().split(" ")
+                raw_devices = raw_input("What are the raw storage devices for these hosts(/dev/<device>) ?: ")
+                raw_devices = check_input(raw_devices)
                 raw_storage_size = int(raw_input("What is the size of each raw storage device (GB) ?: "))
                 registry_pvsize = int(raw_input("What is the size for the registry persistent volume (GB)?: "))
                 replica_log = int(raw_input("How many replicas for logging ?: "))
@@ -546,16 +530,8 @@ elif choice == 4:
                         print "than the Total Storage allocated\033[0m"
                         exit() 
 
-		
-	        if ver in ['3.9', '3.10']:
-                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'applogmet.j2')
-                
-                file_loader = FileSystemLoader(os.path.dirname(template_file))
-		env = Environment(loader=file_loader)
-		template = env.get_template(os.path.basename(template_file))
-
+                template = get_template_input(ver, 'applogmet.j2')
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,logging_pvsize=logging_pvsize,replica_log=replica_log)
-		#Print the output
 		print(output)
         
 elif choice == 5: 
@@ -566,10 +542,12 @@ elif choice == 5:
         avail_hosts = int(raw_input("How many nodes are available ?:  "))
         if avail_hosts >= 3:
     
-                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ").strip().split(" ")
+                app_hosts =  raw_input("What hosts will be used for application storage (IP/FQDN) ?: ")
+                app_hosts = check_input(app_hosts)
                 min_hosts()
                 host_not_valid()
-                raw_devices = raw_input("What are the raw storage devices these hosts(/dev/<device>) ?: ").strip().split(" ")
+                raw_devices = raw_input("What are the raw storage devices these hosts(/dev/<device>) ?: ")
+                raw_devices = check_input(raw_devices)
                 raw_storage_size = int(raw_input("What is the size of each raw storage device(s) ?: "))
  
  
@@ -580,13 +558,7 @@ elif choice == 5:
                 print "# Total Storage allocated (GB) = 0" 
                 print "# Total Storage available (GB) = %d" % total_avail_store 
                 
-	        if ver in ['3.9', '3.10']:
-                        template_file = os.path.join(get_template_path(), ''.join(ver.split('.')), 'app.j2')
-                
-                file_loader = FileSystemLoader(os.path.dirname(template_file))
-		env = Environment(loader=file_loader)
-		template = env.get_template(os.path.basename(template_file))
-
+                template = get_template_input(ver, 'app.j2')
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size)
 		#Print the output
 		print(output)
@@ -597,6 +569,7 @@ else:
 parser = argparse.ArgumentParser()
 parser.add_argument("-o", "--output", help="Directs the OCP Storage configuration to a file",metavar='PATH',default=None, )
 args = parser.parse_args()
-                
-with open(args.output, 'w') as output_file:
-        output_file.write("%s\n" % output)
+
+if args.output:
+        with open(args.output, 'w') as output_file:
+                output_file.write("%s\n" % output)

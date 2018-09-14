@@ -13,8 +13,9 @@
 #         copied and pasted into the larger openshift-ansible inventory file   *
 #         for your deployment.                                                 *
 #                                                                              *     
-# Usage:                $ ./cic.py                                             *
-#                                                                              *
+# Usage:  $ ./cic.py                                                           *
+#         or                                                                   *
+#         $ ./cic.py -o <output> file                                          *
 #*******************************************************************************
 
 
@@ -61,7 +62,7 @@ def host_in_use():
             continue
         elif is_valid_hostname(lhosts) == True and lhosts in app_hosts:
             print "Host: \033[91m %s \033[0m is already used for application hosting" % lhosts
-            exit()    
+            exit()
         else:
             print "\033[91m %s \033[0m is not valid hostname" % lhosts
             exit()
@@ -72,7 +73,7 @@ def met_in_use():
             continue
         elif is_valid_hostname(hosts) == True and hosts in app_hosts:
             print "Host: \033[91m %s \033[0m is already used for application hosting" % hosts
-            exit()    
+            exit()
         else:
             print "\033[91m %s \033[0m is not valid hostname" % hosts
             exit()
@@ -110,7 +111,7 @@ def get_version(prompt):
         return ver
 
 print (60 * '-')
-print ("\033[91m   CIC - Inventory File Creator for CNS3.9 & OCS3.10 \033[0m")
+print ("\033[91m   CIC - Inventory File Creator for CNS 3.9 & OCS 3.10 \033[0m")
 print (60 * '-')
 
 ver = get_version('What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: ')
@@ -167,12 +168,12 @@ if choice == 1:
                 if registry_pvsize > raw_storage_size:
                         print "\033[91mWarning one or more persistent volumes are"
                         print "larger than the raw storage device size\033[0m"
-                        exit()         
+                        exit()
  
                 template = get_template_input(ver, 'appreg.j2')
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size,registry_pvsize=registry_pvsize)
 		print(output)
-             
+
 elif choice == 2:
         print (60 * '-')
         print ("For this configuration 7 nodes are recommended")
@@ -239,7 +240,7 @@ elif choice == 2:
                         print "  "
                         print "Warning your Total Storage available is less "
                         print "than the Total Storage allocated\033[0m"
-                        exit() 
+                        exit()
 
                 template = get_template_input(ver, 'applog-multi.j2')
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,logging_pvsize=logging_pvsize,replica_log=replica_log,log_hosts=log_hosts,log_devices=log_devices, log_storage_size=log_storage_size )
@@ -319,7 +320,7 @@ elif choice == 3:
                 met_storage_size = int(raw_input("What is the size of each raw storage device (GB) ? : "))
                 zone = [1,2,3]
 
-                min_block_host_vol_size =  ( metrics_pvsize * replica_metrics) 
+                min_block_host_vol_size =  ( metrics_pvsize * replica_metrics)
                 block_host_size = int ( min_block_host_vol_size + (30/100.0) * min_block_host_vol_size)
                 
                 # Two cluster total storage calculation
@@ -357,7 +358,7 @@ elif choice == 3:
                         print "  "
                         print "Warning your Total Storage available is less "
                         print "than the Total Storage allocated\033[0m"
-                        exit() 
+                        exit()
 
                 template = get_template_input(ver, 'appmet-multi.j2') 
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,metrics_pvsize=metrics_pvsize,met_hosts=met_hosts,met_devices=met_devices, met_storage_size=met_storage_size )
@@ -398,14 +399,14 @@ elif choice == 3:
                         print "larger than the raw storage device size\033[0m"
                         print "  "
                         exit()
-                                
+
                 elif block_calc > total_avail_store and registry_pvsize > total_avail_store:
                         print "\033[91mWarning one or more persistent volumes are"
                         print "larger than the raw storage device size"
                         print "  "
                         print "Warning your Total Storage available is less "
                         print "than the Total Storage allocated\033[0m"
-                        exit() 
+                        exit()
 
                 template = get_template_input(ver, 'appmet.j2')
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize, metrics_pvsize = metrics_pvsize)
@@ -477,7 +478,7 @@ elif choice == 4:
                         print "  "
                         print "Warning your Total Storage available is less "
                         print "than the Total Storage allocated\033[0m"
-                        exit() 
+                        exit()
 
                 template = get_template_input(ver, 'applogmet-multi.j2')
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,logging_pvsize=logging_pvsize,replica_log=replica_log, met_log_hosts=met_log_hosts, met_log_devices=met_log_devices)
@@ -509,7 +510,7 @@ elif choice == 4:
       
                 print "# Cluster 1"
                 print "# Total Storage allocated (GB) = %d" % block_calc
-                print "# Total Storage available (GB) = %d" % total_avail_store 
+                print "# Total Storage available (GB) = %d" % total_avail_store
 
                 if block_calc > total_avail_store and registry_pvsize < total_avail_store:
                         print "\033[91mWarning Your Total Storage available is less "
@@ -521,19 +522,19 @@ elif choice == 4:
                         print "larger than the raw storage device size\033[0m"
                         print "  "
                         exit()
-                                
+
                 elif block_calc > total_avail_store and registry_pvsize > total_avail_store:
                         print "\033[91mWarning one or more persistent volumes are"
                         print "larger than the raw storage device size"
                         print "  "
                         print "Warning your Total Storage available is less "
                         print "than the Total Storage allocated\033[0m"
-                        exit() 
+                        exit()
 
                 template = get_template_input(ver, 'applogmet.j2')
 		output = template.render(ver=ver,app_hosts=app_hosts,raw_devices=json.dumps(raw_devices), raw_storage_size=raw_storage_size, block_host_size=block_host_size,registry_pvsize=registry_pvsize,logging_pvsize=logging_pvsize,replica_log=replica_log)
 		print(output)
-        
+
 elif choice == 5: 
         print (60 * '-')
         print("For this configuration 4 nodes are recommended ")

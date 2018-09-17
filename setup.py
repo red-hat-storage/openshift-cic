@@ -1,3 +1,4 @@
+import os
 from setuptools import setup, find_packages
 from os import path
 from io import open
@@ -8,16 +9,26 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
+# Put templates at proper place
+def package_files(directory):
+    paths = []
+    for (path, directories, filenames) in os.walk(directory):
+        for filename in filenames:
+            paths.append(os.path.join('..', path, filename))
+    return paths
+
+extra_files = package_files('openshift_cic/templates')
+
 
 setup(
     name='openshift_cic',
-    version='0.0.1',
+    version='1.0.0',
     description='An Openshift Gluster Configuration Generator',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/ramkrsna/openshift-cic',
-    author='RAMKY',
-    author_email='ramkrsna@redhat.com',
+    url='https://github.com/red-hat-storage/openshift-cic',
+    author='Ramakrishna Reddy Yekulla',
+    author_email='rreddy@redhat.com',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: System Administrator',
@@ -26,11 +37,12 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
     ],
-    packages=find_packages(exclude=['tests']),
+    packages=['openshift_cic'],
+    package_data={'': extra_files},
     install_requires=['jinja2'],
     entry_points={
         'console_scripts': [
-            'cic=openshift_cic.cic:main',
+            'cic=openshift_cic.cic',
         ],
     }
 

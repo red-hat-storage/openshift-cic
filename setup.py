@@ -42,7 +42,7 @@ setup(
     install_requires=['jinja2'],
     entry_points={
         'console_scripts': [
-            'cic=openshift_cic.cic',
+            'cic=openshift_cic.cic:perform_operation',
         ],
     }
 

@@ -25,7 +25,7 @@ import re
 import json
 
 # regular expression to validate FQDN or IP based on RFCs
-ocp_version = '3.9'
+ocp_version = '3.10'
 
 def is_valid_hostname(hostname):
     if len(hostname) > 255:

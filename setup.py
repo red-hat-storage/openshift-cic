@@ -33,11 +33,11 @@ setup(
         'Development Status :: 3 - Alpha',
         'Intended Audience :: System Administrator',
         'Topic :: Software Development :: Config Generator',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: GPLv3 License',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
     ],
-    packages=['openshift_cic'],
+    packages=['openshift_cic',],
     package_data={'': extra_files},
     install_requires=['jinja2'],
     entry_points={

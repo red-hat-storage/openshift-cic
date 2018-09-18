@@ -93,6 +93,6 @@ def get_version(prompt):
     while True:
         ver = raw_input(prompt).strip()
         if ver not in ('3.9', '3.10'):
-                print "The support versions are 3.9 and 3.10 only "
+                print "The supported versions are 3.9 and 3.10 only "
                 exit()
         return ver

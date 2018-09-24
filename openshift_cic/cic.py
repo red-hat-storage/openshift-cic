@@ -434,6 +434,7 @@ def perform_operation():
                                              logging_pvsize=logging_pvsize,
                                              replica_log=replica_log,
                                              met_log_hosts=met_log_hosts,
+                                             metrics_pvsize = metrics_pvsize,
                                              met_log_devices=met_log_devices)
                     print(output)
             else:
@@ -491,6 +492,7 @@ def perform_operation():
                                              block_host_size=block_host_size,
                                              registry_pvsize=registry_pvsize,
                                              logging_pvsize=logging_pvsize,
+                                             metrics_pvsize = metrics_pvsize,
                                              replica_log=replica_log)
                     print(output)
 

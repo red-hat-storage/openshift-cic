@@ -38,7 +38,7 @@ def min_hosts(app_hosts):
         exit()
 
 
-def host_in_use(log_hosts):
+def host_in_use(log_hosts,app_hosts):
     for lhosts in log_hosts:
         if is_valid_hostname(lhosts) == True and lhosts not in app_hosts:
             continue
@@ -50,7 +50,7 @@ def host_in_use(log_hosts):
             exit()
 
 
-def met_in_use(met_hosts):
+def met_in_use(met_hosts,app_hosts):
     for hosts in met_hosts:
         if is_valid_hostname(hosts) == True and hosts not in app_hosts:
             continue
@@ -62,7 +62,7 @@ def met_in_use(met_hosts):
             exit()
 
 
-def both_in_use(met_log_hosts):
+def both_in_use(met_log_hosts,app_hosts):
     for hosts in met_log_hosts:
         if is_valid_hostname(hosts) == True and hosts not in app_hosts:
             continue

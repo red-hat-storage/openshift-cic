@@ -30,9 +30,9 @@ def perform_operation():
     print ("\033[91m   CIC - Inventory File Creator for CNS 3.9 & OCS 3.10 \033[0m")
     print (60 * '-')
 
-    ver = utils.get_version('What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: ')
-#print "%s" % ver
+    ocpver = utils.get_version('What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: ')
 
+    ver = '3.10'
 
     print (60 * '-')
     print "\033[91m \r\nThe output is NOT A COMPLETE Inventory File."
@@ -86,7 +86,7 @@ def perform_operation():
                             print "larger than the raw storage device size\033[0m"
                             exit()
 
-                    template = utils.get_template_input(ver, 'appreg.j2')
+                    template = utils.get_template_input(ocpver, 'appreg.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
                                              raw_storage_size=raw_storage_size,
@@ -160,7 +160,7 @@ def perform_operation():
                             print "than the Total Storage allocated\033[0m"
                             exit()
 
-                    template = utils.get_template_input(ver, 'applog-multi.j2')
+                    template = utils.get_template_input(ocpver, 'applog-multi.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
                                              raw_storage_size=raw_storage_size,
@@ -216,7 +216,7 @@ def perform_operation():
                             print "than the Total Storage allocated\033[0m"
                             exit()
 
-                    template = utils.get_template_input(ver, 'applog.j2')
+                    template = utils.get_template_input(ocpver, 'applog.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
                                              raw_storage_size=raw_storage_size,
@@ -292,7 +292,7 @@ def perform_operation():
                             print "than the Total Storage allocated\033[0m"
                             exit()
 
-                    template = utils.get_template_input(ver, 'appmet-multi.j2')
+                    template = utils.get_template_input(ocpver, 'appmet-multi.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
                                              raw_storage_size=raw_storage_size,
@@ -348,7 +348,7 @@ def perform_operation():
                             print "than the Total Storage allocated\033[0m"
                             exit()
 
-                    template = utils.get_template_input(ver, 'appmet.j2')
+                    template = utils.get_template_input(ocpver, 'appmet.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
                                              raw_storage_size=raw_storage_size,
@@ -425,7 +425,7 @@ def perform_operation():
                             print "than the Total Storage allocated\033[0m"
                             exit()
 
-                    template = utils.get_template_input(ver, 'applogmet-multi.j2')
+                    template = utils.get_template_input(ocpver, 'applogmet-multi.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
                                              raw_storage_size=raw_storage_size,
@@ -485,7 +485,7 @@ def perform_operation():
                             print "than the Total Storage allocated\033[0m"
                             exit()
 
-                    template = utils.get_template_input(ver, 'applogmet.j2')
+                    template = utils.get_template_input(ocpver, 'applogmet.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
                                              raw_storage_size=raw_storage_size,
@@ -519,7 +519,7 @@ def perform_operation():
                     print "# Total Storage allocated (GB) = 0"
                     print "# Total Storage available (GB) = %d" % total_avail_store
 
-                    template = utils.get_template_input(ver, 'app.j2')
+                    template = utils.get_template_input(ocpver, 'app.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
                                              raw_storage_size=raw_storage_size)

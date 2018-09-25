@@ -85,7 +85,7 @@ def perform_operation():
                             print "\033[91mWarning one or more persistent volumes are"
                             print "larger than the raw storage device size\033[0m"
                             exit()
-
+                    print "  "
                     template = utils.get_template_input(ocpver, 'appreg.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
@@ -159,7 +159,7 @@ def perform_operation():
                             print "Warning your Total Storage available is less "
                             print "than the Total Storage allocated\033[0m"
                             exit()
-
+                    print " "
                     template = utils.get_template_input(ocpver, 'applog-multi.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
@@ -215,7 +215,7 @@ def perform_operation():
                             print "Warning your Total Storage available is less "
                             print "than the Total Storage allocated\033[0m"
                             exit()
-
+                    print " "
                     template = utils.get_template_input(ocpver, 'applog.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
@@ -291,7 +291,7 @@ def perform_operation():
                             print "Warning your Total Storage available is less "
                             print "than the Total Storage allocated\033[0m"
                             exit()
-
+                    print " "
                     template = utils.get_template_input(ocpver, 'appmet-multi.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
@@ -347,7 +347,7 @@ def perform_operation():
                             print "Warning your Total Storage available is less "
                             print "than the Total Storage allocated\033[0m"
                             exit()
-
+                    print " "
                     template = utils.get_template_input(ocpver, 'appmet.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
@@ -424,7 +424,7 @@ def perform_operation():
                             print "Warning your Total Storage available is less "
                             print "than the Total Storage allocated\033[0m"
                             exit()
-
+                    print " "
                     template = utils.get_template_input(ocpver, 'applogmet-multi.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),
@@ -484,6 +484,7 @@ def perform_operation():
                             print "Warning your Total Storage available is less "
                             print "than the Total Storage allocated\033[0m"
                             exit()
+                    print " "
 
                     template = utils.get_template_input(ocpver, 'applogmet.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
@@ -518,7 +519,7 @@ def perform_operation():
                     print "# Cluster 1"
                     print "# Total Storage allocated (GB) = 0"
                     print "# Total Storage available (GB) = %d" % total_avail_store
-
+                    print "  "
                     template = utils.get_template_input(ocpver, 'app.j2')
                     output = template.render(ver=ver,app_hosts=app_hosts,
                                              raw_devices=json.dumps(raw_devices),

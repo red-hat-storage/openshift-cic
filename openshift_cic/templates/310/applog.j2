@@ -1,0 +1,42 @@
+[OSEv3:children]
+glusterfs
+   
+[OSEv3:vars]
+# registry
+openshift_hosted_registry_storage_kind=glusterfs
+openshift_hosted_registry_storage_volume_size={{registry_pvsize}}Gi
+openshift_hosted_registry_selector="node-role.kubernetes.io/infra=true"
+   
+# logging
+openshift_logging_install_logging=true
+openshift_logging_es_pvc_dynamic=true 
+openshift_logging_es_pvc_size={{logging_pvsize}}Gi
+openshift_logging_es_cluster_size={{replica_log}}
+openshift_logging_es_pvc_storage_class_name='glusterfs-storage-block'
+openshift_logging_kibana_nodeselector={"node-role.kubernetes.io/infra": "true"}
+openshift_logging_curator_nodeselector={"node-role.kubernetes.io/infra": "true"}
+openshift_logging_es_nodeselector={"node-role.kubernetes.io/infra": "true"}
+  
+# Container image to use for glusterfs pods
+openshift_storage_glusterfs_image="registry.access.redhat.com/rhgs3/rhgs-server-rhel7:v{{ver}}"
+  
+# Container image to use for glusterblock-provisioner pod
+openshift_storage_glusterfs_block_image="registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7:v{{ver}}"
+  
+# Container image to use for heketi pods
+openshift_storage_glusterfs_heketi_image="registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7:v{{ver}}"
+    
+# CNS storage cluster for applications
+openshift_storage_glusterfs_namespace=app-storage
+openshift_storage_glusterfs_storageclass=true
+openshift_storage_glusterfs_storageclass_default=false
+openshift_storage_glusterfs_block_deploy=true
+openshift_storage_glusterfs_block_host_vol_create=true
+openshift_storage_glusterfs_block_host_vol_size={{block_host_size}}
+openshift_storage_glusterfs_block_storageclass=true
+openshift_storage_glusterfs_block_storageclass_default=false
+
+[glusterfs]
+{% for app in app_hosts -%}
+	{{app}} glusterfs_zone={{loop.cycle(1,2,3)}}  glusterfs_device='{{ raw_devices }}'
+{% endfor -%}

@@ -32,7 +32,7 @@ def perform_operation():
 
     ocpver = utils.get_version('What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: ')
 
-    ver = '3.10'
+    ver = '3.11'
 
     print (60 * '-')
     print "\033[91m \r\nThe output is NOT A COMPLETE Inventory File."

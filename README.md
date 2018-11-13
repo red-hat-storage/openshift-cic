@@ -4,7 +4,8 @@
 
 Across Distributions
 --------------------
-- Install pip (Eg. in OSX brew install pip or easy_install pip )
+- Install [pip](https://pip.pypa.io/en/stable/installing/)
+	 (Eg. in OSX brew install pip or easy_install pip )
 - cd openshift-cic
 - pip install -r requirements.txt
 - sudo python setup.py install
@@ -12,7 +13,6 @@ Across Distributions
 For RHEL7.5 , Centos or Fedora
 ------------------------------
 - yum install python-jinja2
-- Pull the PR with the latest changes inside the openshift-cic directory
 - sudo python setup.py install
 - cic -o <outputfile>
 

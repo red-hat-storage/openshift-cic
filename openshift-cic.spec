@@ -24,7 +24,8 @@ inventory_file for running openshift-ansible playbooks. The goal is to
 reduce the complexity and error prone nature of needing to know the
 correct CNS/CRS inventory_file options for a particular OCP/CNS version.
 The first prototype will be created for OCP 3.9 with the goal of
-using with OCP 3.10 as well.
+using with OCP 3.10 as well.This release supports openshift-cic 
+for OCS for 3.11.   
 
 %prep
 %autosetup -n %{pypiname}-%{version}

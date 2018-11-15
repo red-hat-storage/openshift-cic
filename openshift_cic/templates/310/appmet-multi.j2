@@ -47,10 +47,10 @@ openshift_storage_glusterfs_registry_block_storageclass_default=false
    
 [glusterfs]
 {% for app in app_hosts -%}
-	{{app}} glusterfs_zone={{loop.cycle(1,2,3)}}  glusterfs_device='{{ raw_devices }}'
+	{{app}} glusterfs_zone={{loop.cycle(1,2,3)}}  glusterfs_devices='{{ raw_devices }}'
 {% endfor %}
 
 [glusterfs_registry]
 {% for z in met_hosts -%}
-	{{z}} glusterfs_zone={{loop.cycle(1,2,3)}}  glusterfs_device='{{ met_devices }}'
+	{{z}} glusterfs_zone={{loop.cycle(1,2,3)}}  glusterfs_devices='{{ met_devices }}'
 {% endfor -%}

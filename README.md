@@ -9,8 +9,9 @@ Across Distributions
 - cd openshift-cic
 - pip install -r requirements.txt
 - sudo python setup.py install
+- cic -o <outputfile>
 
-For RHEL7.5 , Centos or Fedora
+For RHEL7.5 , CentOS or Fedora
 ------------------------------
 - yum install python-jinja2
 - sudo python setup.py install
@@ -24,7 +25,7 @@ Script which the user runs and then answers a list of questions to create set of
 
 Embedded in the answers will be calculations or ‘pre-flight checks’. An example is the minimum size for the block_host_vol_size (GB). The minimum size is equal to all of the blockvolume PVs added up for metrics and logging + 30% overhead which is a good practice for file system overhead. Also, there is a calculation done for the Total available storage compared to the Total allocated storage as well as a check to make sure the size of any Persistent Volume (PV) does not exceed the size of the raw storage devices. Both of these conditions, if violated, will print out a Warning message and the user will need to try again.
 ```
-$ ./cic.py
+$ cic -o <filename>
 What version of OpenShift Container Platform are you deploying (3.9, 3.10 or 3.11)?: 3.9
 ------------------------------------------------------------
    CNS - Inventory File Creator

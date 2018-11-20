@@ -81,7 +81,7 @@ def get_template_path():
 
 
 def get_template_input(ver, jinjafile):
-    if ver in ["3.9", "3.10"]:
+    if ver in ["3.9", "3.10", "3.11"]:
         template_file = os.path.join(
             get_template_path(), "".join(ver.split(".")), jinjafile
         )
@@ -92,7 +92,7 @@ def get_template_input(ver, jinjafile):
 def get_version(prompt):
     while True:
         ver = raw_input(prompt).strip()
-        if ver not in ('3.9', '3.10'):
-                print "The supported versions are 3.9 and 3.10 only "
+        if ver not in ('3.9', '3.10', '3.11'):
+                print "The supported versions are 3.9, 3.10 and 3.11 only "
                 exit()
         return ver

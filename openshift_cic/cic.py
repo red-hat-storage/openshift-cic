@@ -8,14 +8,14 @@
 #------------------------------------------------------------------------------*
 #                                                                              *
 # cic.py: This tool is very highly version dependent.It is currently           *
-#         configured to work with OpenShift 3.9 and CNS 3.9.The output is NOT  *
+#         configured to work with OCP 3.9, 3.10 &  3.11 .The output is NOT     *
 #         A COMPLETE InventoryFile. Created Inventory file options should be   *
 #         copied and pasted into the larger openshift-ansible inventory file   *
 #         for your deployment.                                                 *
 #                                                                              *
-# Usage:  $ ./cic.py                                                           *
+# Usage:  $cic -o <output> file                                                *
 #         or                                                                   *
-#         $ ./cic.py -o <output> file                                          *
+#         $cic                                                                 *
 #*******************************************************************************
 
 
@@ -27,12 +27,12 @@ import utils
 
 def perform_operation():
     print (60 * '-')
-    print ("\033[91m   CIC - Inventory File Creator for CNS 3.9 & OCS 3.10 \033[0m")
+    print ("\033[91m   CIC - Inventory File Creator for CNS 3.9, OCS 3.10 & 3.11 \033[0m")
     print (60 * '-')
 
-    ocpver = utils.get_version('What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: ')
+    ocpver = utils.get_version('What version of OpenShift Container Platform are you deploying (3.9, 3.10 & 3.11)?: ')
 
-    ver = '3.10'
+    ver = '3.11'
 
     print (60 * '-')
     print "\033[91m \r\nThe output is NOT A COMPLETE Inventory File."

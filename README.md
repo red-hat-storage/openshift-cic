@@ -1,13 +1,32 @@
 # openshift-cic
 
+# Installation
+
+Across Distributions
+--------------------
+- Install [pip](https://pip.pypa.io/en/stable/installing/)
+	 (Eg. in OSX brew install pip or easy_install pip )
+- cd openshift-cic
+- pip install -r requirements.txt
+- sudo python setup.py install
+- cic -o <outputfile>
+
+For RHEL7.5 , CentOS or Fedora
+------------------------------
+- yum install python-jinja2
+- sudo python setup.py install
+- cic -o <outputfile>
+
+There is also a RPM SPEC file provided, if you like to build an RPM before you install.   
+
 # CNS Inventory file Creator (CIC)
 
-Script which the user runs and then answers a list of questions to create set of inventory_file options to be incorporated into their larger inventory_file for running openshift-ansible playbooks. The goal is to reduce the complexity and error prone nature of needing to know the correct inventory_file options for a particular OCP version. CIC will generate inventory file options for OCP 3.9 and OCP 3.10.
+Script which the user runs and then answers a list of questions to create set of inventory_file options to be incorporated into their larger inventory_file for running openshift-ansible playbooks. The goal is to reduce the complexity and error prone nature of needing to know the correct inventory_file options for a particular OCP version. CIC will generate inventory file options for OCP 3.9, OCP 3.10 and OCP 3.11.
 
 Embedded in the answers will be calculations or ‘pre-flight checks’. An example is the minimum size for the block_host_vol_size (GB). The minimum size is equal to all of the blockvolume PVs added up for metrics and logging + 30% overhead which is a good practice for file system overhead. Also, there is a calculation done for the Total available storage compared to the Total allocated storage as well as a check to make sure the size of any Persistent Volume (PV) does not exceed the size of the raw storage devices. Both of these conditions, if violated, will print out a Warning message and the user will need to try again.
 ```
-$ ./cic.py
-What version of OpenShift Container Platform are you deploying (3.9 or 3.10)?: 3.9
+$ cic -o <filename>
+What version of OpenShift Container Platform are you deploying (3.9, 3.10 or 3.11)?: 3.9
 ------------------------------------------------------------
    CNS - Inventory File Creator
 ------------------------------------------------------------

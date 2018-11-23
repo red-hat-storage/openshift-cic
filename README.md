@@ -9,13 +9,13 @@ Across Distributions
 - cd openshift-cic
 - pip install -r requirements.txt
 - sudo python setup.py install
-- cic -o <outputfile>
+- cic -o <outputfile> (To any text file)
 
 For RHEL7.5 , CentOS or Fedora
 ------------------------------
 - yum install python-jinja2
 - sudo python setup.py install
-- cic -o <outputfile>
+- cic -o <outputfile> (To any text file)
 
 There is also a RPM SPEC file provided, if you like to build an RPM before you install.   
 

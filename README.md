@@ -40,6 +40,7 @@ the larger openshift-ansible inventory file for your deployment.
 3. Storage for Applications + Metrics 
 4. Storage for Applications + Registry + Logging + Metrics
 5. Storage for Applications Only
+6. Storage for Applications + Registry + Logging + Metrics + Cluster-Monitoring-Operator
 ------------------------------------------------------------
 Enter your choice [1-5] : 4
 ------------------------------------------------------------
